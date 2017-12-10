@@ -1,3 +1,3 @@
-import * as store from './hexastore'
+import * as store from './levelgraph'
 
 export default store

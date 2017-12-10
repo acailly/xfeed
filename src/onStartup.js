@@ -25,4 +25,5 @@ export default () => {
     store.addFact(['#5', 'created', '01/01/2018']),
     store.addFact(['#5', 'icon', 'monetization_on'])
   ])
+  .catch(err => console.error(err))
 }

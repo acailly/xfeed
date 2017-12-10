@@ -35,6 +35,7 @@ class Feed extends PureComponent {
     .then(([projectName, items]) => {
       this.setState({projectName, items})
     })
+    .catch(err => console.error(err))
   }
 
   render (){
