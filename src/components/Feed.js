@@ -1,39 +1,64 @@
-import React from 'react'
+import React, {PureComponent} from 'react'
 import {Timeline, TimelineEvent} from 'react-event-timeline'
 import store from '../store'
 
-const Feed = ({projectId}) => {
-  const projectName = store
-    .find([
-      [projectId, 'name', ['projectName']]
-    ])[0]
-    .projectName
+class Feed extends PureComponent {
 
-  const timelineEvents =
-    store
-    .find([
-      [projectId, 'contains', ['itemId']],
-      [['itemId'], 'name', ['itemName']],
-      [['itemId'], 'created', ['itemCreationDate']],
-      [['itemId'], 'icon', ['itemIcon']]
+  state= {
+    projectName: 'Loading',
+    items: []
+  }
+
+  componentDidMount= () => {
+    const {projectId} = this.props
+
+    const fetchProjectName = 
+      store
+      .find([
+        [projectId, 'name', ['projectName']]
+      ])
+      .then(([{projectName}, ...rest]) => projectName)
+
+    const fetchTimelineEvents =
+      store
+      .find([
+        [projectId, 'contains', ['itemId']],
+        [['itemId'], 'name', ['itemName']],
+        [['itemId'], 'created', ['itemCreationDate']],
+        [['itemId'], 'icon', ['itemIcon']]
+      ])
+
+    Promise.all([
+      fetchProjectName,
+      fetchTimelineEvents
     ])
-    .map(({itemId, itemName, itemIcon, itemCreationDate}) =>
-      <TimelineEvent
-        key={itemId}
-        title={itemName}
-        createdAt={itemCreationDate}
-        icon={<i className='material-icons md-18'>{itemIcon}</i>}
-      />
-    )
+    .then(([projectName, items]) => {
+      this.setState({projectName, items})
+    })
+  }
 
-  return (
-    <div>
-      <h1 style={{textAlign: 'center'}}>{projectName}</h1>
-      <Timeline>
-        {timelineEvents}
-      </Timeline>
-    </div>
-  )
+  render (){
+
+    const timelineEvents =
+      this.state.items
+      .map(({itemId, itemName, itemIcon, itemCreationDate}) =>
+        <TimelineEvent
+          key={itemId}
+          title={itemName}
+          createdAt={itemCreationDate}
+          icon={<i className='material-icons md-18'>{itemIcon}</i>}
+        />
+      )
+
+    return (
+      <div>
+        <h1 style={{textAlign: 'center'}}>{this.state.projectName}</h1>
+        <Timeline>
+          {timelineEvents}
+        </Timeline>
+      </div>
+    )
+  }
 }
 
 export default Feed

@@ -6,6 +6,7 @@ import registerServiceWorker from './registerServiceWorker'
 import onStartup from './onStartup'
 
 onStartup()
-
-ReactDOM.render(<App />, document.getElementById('root'))
-registerServiceWorker()
+.then(() => {
+  ReactDOM.render(<App />, document.getElementById('root'))
+  registerServiceWorker()
+})

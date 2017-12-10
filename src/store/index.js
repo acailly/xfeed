@@ -1,12 +1,3 @@
-import Hexastore from 'hexastore'
+import * as store from './hexastore'
 
-const facts = new Hexastore()
-
-const addFact = fact => facts.put(fact)
-
-const find = queries => facts.search(queries)
-
-export default {
-  addFact,
-  find
-}
+export default store
