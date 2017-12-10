@@ -23,7 +23,20 @@ export default () => {
     store.addFact(['#1', 'contains', '#5']),
     store.addFact(['#5', 'name', `Paie de Décembre`]),
     store.addFact(['#5', 'created', '01/01/2018']),
-    store.addFact(['#5', 'icon', 'monetization_on'])
+    store.addFact(['#5', 'icon', 'monetization_on']),
+
+    store.addFact(['FactWidget', 'prop', '#7']),
+    store.addFact(['#7', 'name', 'subject']),
+    store.addFact(['FactWidget', 'prop', '#8']),
+    store.addFact(['#8', 'prop', 'predicate']),
+    store.addFact(['FactWidget', 'prop', '#9']),
+    store.addFact(['#9', 'name', 'object']),
+    store.addFact(['FactWidget', 'render', 'FactWidget']), // TODO A REVOIR
+
+    store.addFact(['#10', 'is', 'FactWidget']),
+    store.addFact(['#10', 'own', '#11']), // TODO A REVOIR
+
+    store.addFact(['socrate', 'is', 'mortel', '#11'])// TODO A REVOIR
   ])
   .catch(err => console.error(err))
 }

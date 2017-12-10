@@ -9,7 +9,7 @@ class App extends Component {
         <div style={{flex: '1 1 0', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}}>
           <Feed projectId='#1' />
         </div>
-        <div style={{background: 'lightgreen', flex: '1 1 0', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}}>
+        <div style={{background: 'lightgreen', flex: '1 1 0', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'stretch'}}>
           <Content />
         </div>
       </div>

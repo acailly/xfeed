@@ -1,11 +1,10 @@
 import React from 'react'
+import FactWidget from './FactWidget'
 
 const Content = () => {
-  return (
-    <div>
-      Content
-    </div>
-  )
+  return [
+    <FactWidget widgetId='#10' />
+  ]
 }
 
 export default Content

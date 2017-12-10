@@ -14,14 +14,14 @@ class Feed extends PureComponent {
 
     const fetchProjectName = 
       store
-      .find([
+      .search([
         [projectId, 'name', ['projectName']]
       ])
       .then(([{projectName}, ...rest]) => projectName)
 
     const fetchTimelineEvents =
       store
-      .find([
+      .search([
         [projectId, 'contains', ['itemId']],
         [['itemId'], 'name', ['itemName']],
         [['itemId'], 'created', ['itemCreationDate']],
