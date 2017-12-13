@@ -1,4 +1,4 @@
-import React, {PureComponent} from 'react'
+import React, {PureComponent, Fragment} from 'react'
 import store from '../store'
 
 class FactWidget extends PureComponent {
@@ -6,20 +6,31 @@ class FactWidget extends PureComponent {
   state = {}
 
   componentDidMount = () => {
-    const {widgetId} = this.props
+    const {s, p, o} = this.props
+
+    const subject = s || ['subject']
+    const predicate = p || ['predicate']
+    const object = o || ['object']
 
     store.search([
-      [widgetId, 'own', ['factId']]
+      [subject, predicate, object]
     ])
-    .then(([{factId}, ...rest]) => store.getFact(factId))
-    .then(({subject, predicate, object}) => this.setState({subject, predicate, object}))
+    .then(([fact, ...rest]) => this.setState({
+      subject: s? undefined : fact.subject,
+      predicate: p? undefined : fact.predicate,
+      object: o? undefined : fact.object
+    }))
   }
 
   render () {
+    const {subject, predicate, object} = this.state
+
+    const label = subject || predicate || object || 'Error'
+
     return (
-      <div style={{backgroundColor: 'white', textAlign: 'center', margin: '5px', padding: '10px'}}>
-        {`${this.state.subject} ${this.state.predicate} ${this.state.object}`}
-      </div>
+      <Fragment>
+        {label}
+      </Fragment>
     ) 
   }
 }

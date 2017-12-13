@@ -1,12 +1,12 @@
-import {is, cond, T, propEq, find} from 'ramda'
+import {is, cond, T} from 'ramda'
 import memdb from 'memdb'
 import levelgraph from 'levelgraph'
 
 const db = levelgraph(memdb())
 
-export const addFact = ([subject, predicate, object, factId]) => {
+export const addFact = ([subject, predicate, object]) => {
   return new Promise((resolve, reject) => {
-    db.put({subject, predicate, object, factId}, err => {
+    db.put({subject, predicate, object}, err => {
       if (err) reject(err)
       resolve()
     })
@@ -31,15 +31,6 @@ export const search = queries => {
     db.search(levelgraphQueries, (err, results) => {
       if (err) reject(err)
       resolve(results)
-    })
-  })
-}
-
-export const getFact = factId => {
-  return new Promise((resolve, reject) => {
-    db.get({}, (err, results) => {
-      if (err) reject(err)
-      resolve(find(propEq('factId', factId), results))
     })
   })
 }
