@@ -1,4 +1,8 @@
 import store from "./store"
+import "./rules"
+
+//DEBUG
+window.search = v => store.search(v).subscribe(r => console.log(r))
 
 export default () => {
   return Promise.all([
@@ -76,7 +80,6 @@ export default () => {
     store.addFact(["#paieOctobre", "workingHours", 115]),
     store.addFact(["#paieOctobre", "workingDays", 16]),
     store.addFact(["#paieOctobre", "hourlyGrossRate", 3.77]),
-    store.addFact(["#paieOctobre", "grossSalary", 433.55]),
 
     //PROJET ASSISTANTE MATERNELLE - PAIE NOVEMBRE
     store.addFact(["#projetAssMat", "contains", "#paieNovembre"]),

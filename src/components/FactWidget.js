@@ -7,17 +7,24 @@ class FactWidget extends PureComponent {
   componentDidMount = () => {
     const { s, p, o } = this.props
 
-    const subject = s || ["subject"]
-    const predicate = p || ["predicate"]
-    const object = o || ["object"]
+    const subject = s || ["_subject_"]
+    const predicate = p || ["_predicate_"]
+    const object = o || ["_object_"]
 
-    store.search([[subject, predicate, object]]).then(([fact, ...rest]) =>
-      this.setState({
-        subject: s ? undefined : fact.subject,
-        predicate: p ? undefined : fact.predicate,
-        object: o ? undefined : fact.object
-      })
-    )
+    store
+      .watch([[subject, predicate, object]])
+      .mergeAll()
+      .take(1)
+      .subscribe(
+        fact => {
+          this.setState({
+            subject: s ? undefined : fact._subject_,
+            predicate: p ? undefined : fact._predicate_,
+            object: o ? undefined : fact._object_
+          })
+        },
+        err => console.error(err)
+      )
   }
 
   render() {

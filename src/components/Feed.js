@@ -1,6 +1,7 @@
 import React, { PureComponent } from "react"
 import { Timeline, TimelineEvent } from "react-event-timeline"
 import { sortBy, prop } from "ramda"
+import { Observable } from "rxjs/Observable"
 import store from "../store"
 
 class Feed extends PureComponent {
@@ -13,11 +14,13 @@ class Feed extends PureComponent {
     const { projectId } = this.props
 
     const fetchProjectName = store
-      .search([[projectId, "name", ["projectName"]]])
-      .then(([{ projectName }, ...rest]) => projectName)
+      .watch([[projectId, "name", ["projectName"]]])
+      .mergeAll()
+      .take(1)
+      .pluck("projectName")
 
     const fetchTimelineEvents = store
-      .search([
+      .watch([
         [projectId, "contains", ["itemId"]],
         [["itemId"], "name", ["itemName"]],
         [["itemId"], "created", ["itemCreationDate"]],
@@ -25,13 +28,14 @@ class Feed extends PureComponent {
         [["itemId"], "is", ["itemType"]],
         [["itemType"], "icon", ["itemIcon"]]
       ])
-      .then(items => sortBy(prop("itemCreationDate"))(items))
+      .map(sortBy(prop("itemCreationDate")))
 
-    Promise.all([fetchProjectName, fetchTimelineEvents])
-      .then(([projectName, items]) => {
+    Observable.combineLatest(fetchProjectName, fetchTimelineEvents).subscribe(
+      ([projectName, items]) => {
         this.setState({ projectName, items })
-      })
-      .catch(err => console.error(err))
+      },
+      err => console.error(err)
+    )
   }
 
   render() {

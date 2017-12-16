@@ -1,8 +1,9 @@
 import React from "react"
 import ReactDOM from "react-dom"
 import "./index.css"
-import App from "./components/App"
 import registerServiceWorker from "./registerServiceWorker"
+import "./rxjs-operators"
+import App from "./components/App"
 import onStartup from "./onStartup"
 
 onStartup().then(() => {

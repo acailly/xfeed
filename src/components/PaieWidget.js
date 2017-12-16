@@ -1,5 +1,4 @@
 import React, { PureComponent, Fragment } from "react"
-import { sortBy, prop } from "ramda"
 import Card from "./Card"
 import Title from "./Title"
 import SubTitle from "./SubTitle"
@@ -14,40 +13,37 @@ class PaieWidget extends PureComponent {
   componentDidMount = () => {
     const { paieId } = this.props
 
-    const fetchCotisations = store
-      .search([
+    store
+      .watch([
         ["paie", "cotisation", ["cotisationId"]],
         [["cotisationId"], "name", ["cotisationName"]],
         [["cotisationId"], "base", ["cotisationBase"]],
-        [["cotisationId"], "rate", ["cotisationRate"]]
+        [["cotisationId"], "rate", ["cotisationRate"]],
+        [paieId, ["cotisationName"], ["cotisationAmount"]],
+        [paieId, "grossSalary", ["grossSalary"]]
       ])
-      .then(cotisations => sortBy(prop("cotisationBase"))(cotisations))
-
-    const fetchGrossSalary = store.search([
-      [paieId, "grossSalary", ["grossSalary"]]
-    ])
-
-    Promise.all([fetchCotisations, fetchGrossSalary])
-      .then(([cotisations, [{ grossSalary }]]) => {
-        this.setState({ cotisations, grossSalary })
-      })
-      .catch(err => console.error(err))
+      .subscribe(
+        cotisations => {
+          this.setState({ cotisations })
+        },
+        err => console.error(err)
+      )
   }
 
   renderCotisation = ({
     cotisationId,
     cotisationName,
     cotisationBase,
-    cotisationRate
+    cotisationRate,
+    cotisationAmount,
+    grossSalary
   }) => {
-    const amount =
-      this.state.grossSalary * (cotisationBase / 100.0) * (cotisationRate / 100)
     return (
-      <Fragment key={cotisationId}>
-        {cotisationName} s'applique sur {cotisationBase}% de{" "}
-        {this.state.grossSalary}€ avec un taux de {cotisationRate}% :{" "}
-        {amount.toFixed(2)}€
-      </Fragment>
+      <li key={cotisationId}>
+        La cotisation <b>{cotisationName}</b> s'applique sur {cotisationBase}%
+        de {grossSalary}€ avec un taux de {cotisationRate}% :{" "}
+        {(+cotisationAmount).toFixed(2)}€
+      </li>
     )
   }
 
@@ -55,9 +51,7 @@ class PaieWidget extends PureComponent {
   render() {
     const { paieId } = this.props
 
-    const cotisations = this.state.cotisations
-      .map(this.renderCotisation)
-      .map(cotisation => <li>{cotisation}</li>)
+    const cotisations = this.state.cotisations.map(this.renderCotisation)
 
     return (
       <Fragment>

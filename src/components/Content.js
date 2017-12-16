@@ -11,7 +11,10 @@ class Content extends PureComponent {
 
     store
       .search([[subject, "is", ["type"]], [["type"], "render", ["widget"]]])
-      .then(results => this.setState(results.map(prop("widget"))))
+      .subscribe(
+        results => this.setState(results.map(prop("widget"))),
+        err => console.error(err)
+      )
   }
 
   render() {
