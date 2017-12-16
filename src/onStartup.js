@@ -2,35 +2,38 @@ import store from "./store"
 
 export default () => {
   return Promise.all([
-    store.addFact(["#1", "is", "project"]),
-    store.addFact(["#1", "name", "Assistante maternelle"]),
-
-    store.addFact(["#1", "contains", "#2"]),
-    store.addFact(["#2", "name", "Début du contrat"]),
-    store.addFact(["#2", "created", "01/10/2017"]),
-    store.addFact(["#2", "icon", "fiber_new"]),
-
-    store.addFact(["#1", "contains", "#3"]),
-    store.addFact(["#3", "is", "paie"]),
-    store.addFact(["#3", "name", `Paie d'Octobre`]),
-    store.addFact(["#3", "created", "01/11/2017"]),
-    store.addFact(["#3", "icon", "monetization_on"]),
-
-    store.addFact(["#1", "contains", "#4"]),
-    store.addFact(["#4", "is", "paie"]),
-    store.addFact(["#4", "name", `Paie de Novembre`]),
-    store.addFact(["#4", "created", "01/12/2017"]),
-    store.addFact(["#4", "icon", "monetization_on"]),
-
-    store.addFact(["#1", "contains", "#5"]),
-    store.addFact(["#5", "is", "paie"]),
-    store.addFact(["#5", "name", `Paie de Décembre`]),
-    store.addFact(["#5", "created", "01/01/2018"]),
-    store.addFact(["#5", "icon", "monetization_on"]),
+    store.addFact(["debutContrat", "icon", "fiber_new"]),
 
     store.addFact(["paie", "render", "PaieWidget"]),
-    store.addFact(["#11", "is", "paie"]),
-    store.addFact(["#11", "mois", "octobre"]),
-    store.addFact(["#11", "salaire", "12€"])
+    store.addFact(["paie", "icon", "monetization_on"]),
+
+    store.addFact(["#projetAssMat", "is", "project"]),
+    store.addFact(["#projetAssMat", "name", "Assistante maternelle"]),
+
+    store.addFact(["#projetAssMat", "contains", "#debutContrat"]),
+    store.addFact(["#debutContrat", "is", "debutContrat"]),
+    store.addFact(["#debutContrat", "name", "Début du contrat"]),
+    store.addFact(["#debutContrat", "created", "20171001"]),
+    store.addFact(["#debutContrat", "createdFormatted", "01/10/2017"]),
+
+    store.addFact(["#projetAssMat", "contains", "#paieOctobre"]),
+    store.addFact(["#paieOctobre", "is", "paie"]),
+    store.addFact(["#paieOctobre", "name", `Paie d'Octobre`]),
+    store.addFact(["#paieOctobre", "created", "20171101"]),
+    store.addFact(["#paieOctobre", "createdFormatted", "01/11/2017"]),
+    store.addFact(["#paieOctobre", "month", "octobre"]),
+    store.addFact(["#paieOctobre", "salary", "12€"]),
+
+    store.addFact(["#projetAssMat", "contains", "#paieNovembre"]),
+    store.addFact(["#paieNovembre", "is", "paie"]),
+    store.addFact(["#paieNovembre", "name", `Paie de Novembre`]),
+    store.addFact(["#paieNovembre", "created", "20171201"]),
+    store.addFact(["#paieNovembre", "createdFormatted", "01/12/2017"]),
+
+    store.addFact(["#projetAssMat", "contains", "#paieDecembre"]),
+    store.addFact(["#paieDecembre", "is", "paie"]),
+    store.addFact(["#paieDecembre", "name", `Paie de Décembre`]),
+    store.addFact(["#paieDecembre", "created", "20180101"]),
+    store.addFact(["#paieDecembre", "createdFormatted", "01/01/2018"])
   ]).catch(err => console.error(err))
 }

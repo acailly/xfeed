@@ -1,5 +1,6 @@
 import React, { PureComponent } from "react"
 import { Timeline, TimelineEvent } from "react-event-timeline"
+import { sortBy, prop } from "ramda"
 import store from "../store"
 
 class Feed extends PureComponent {
@@ -15,12 +16,16 @@ class Feed extends PureComponent {
       .search([[projectId, "name", ["projectName"]]])
       .then(([{ projectName }, ...rest]) => projectName)
 
-    const fetchTimelineEvents = store.search([
-      [projectId, "contains", ["itemId"]],
-      [["itemId"], "name", ["itemName"]],
-      [["itemId"], "created", ["itemCreationDate"]],
-      [["itemId"], "icon", ["itemIcon"]]
-    ])
+    const fetchTimelineEvents = store
+      .search([
+        [projectId, "contains", ["itemId"]],
+        [["itemId"], "name", ["itemName"]],
+        [["itemId"], "created", ["itemCreationDate"]],
+        [["itemId"], "createdFormatted", ["itemCreationDateFormatted"]],
+        [["itemId"], "is", ["itemType"]],
+        [["itemType"], "icon", ["itemIcon"]]
+      ])
+      .then(items => sortBy(prop("itemCreationDate"))(items))
 
     Promise.all([fetchProjectName, fetchTimelineEvents])
       .then(([projectName, items]) => {
@@ -31,11 +36,11 @@ class Feed extends PureComponent {
 
   render() {
     const timelineEvents = this.state.items.map(
-      ({ itemId, itemName, itemIcon, itemCreationDate }) => (
+      ({ itemId, itemName, itemIcon, itemCreationDateFormatted }) => (
         <TimelineEvent
           key={itemId}
           title={itemName}
-          createdAt={itemCreationDate}
+          createdAt={itemCreationDateFormatted}
           icon={<i className="material-icons md-18">{itemIcon}</i>}
         />
       )

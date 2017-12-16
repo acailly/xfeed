@@ -4,7 +4,7 @@ import store from "../store"
 import PaieWidget from "./PaieWidget"
 
 class Content extends PureComponent {
-  state = []
+  state = null
 
   componentDidMount = () => {
     const { subject } = this.props
@@ -19,7 +19,7 @@ class Content extends PureComponent {
 
     return (
       <Fragment>
-        <PaieWidget paieId="#11" />
+        <PaieWidget paieId="#paieOctobre" />
       </Fragment>
     )
   }
