@@ -1,4 +1,5 @@
 import React, { PureComponent, Fragment } from "react"
+import { nth, complement, isEmpty } from "ramda"
 import store from "../store"
 
 class FactWidget extends PureComponent {
@@ -13,8 +14,8 @@ class FactWidget extends PureComponent {
 
     store
       .watch([[subject, predicate, object]])
-      .mergeAll()
-      .take(1)
+      .filter(complement(isEmpty))
+      .map(nth(0))
       .subscribe(
         fact => {
           this.setState({

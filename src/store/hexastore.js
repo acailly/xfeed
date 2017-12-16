@@ -13,6 +13,7 @@ const store$ = new Subject()
 
 export const addFact = fact => {
   facts.put(fact)
+  console.log("DEBUG", "ADD", fact[0], fact[1], fact[2])
   store$.next(true)
   return Observable.empty().startWith(true)
 }
@@ -26,4 +27,10 @@ export const watch = query => {
     .distinctUntilChanged((a, b) => {
       return equals(a, b)
     })
+}
+
+export const deleteFact = ([subject, predicate, object]) => {
+  console.log("DEBUG", "DELETE", subject, predicate, object)
+  //TODO Ne supporte pas la suppression
+  return Observable.empty().startWith(true)
 }

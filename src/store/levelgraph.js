@@ -15,8 +15,6 @@ const db = levelgraph(memdb(), options)
 
 const toLevelGraphValue = cond([[is(Array), v => db.v(v[0])], [T, v => v]])
 
-//TODO Renvoyer des streams rxjs plutot que des promesses
-
 export const search = queries => {
   const levelgraphQueries = queries.map(([s, p, o]) => {
     const subject = toLevelGraphValue(s)
@@ -43,6 +41,7 @@ export const addFact = ([subject, predicate, object]) => {
     new Promise((resolve, reject) => {
       db.put({ subject, predicate, object }, err => {
         if (err) reject(err)
+        console.log("DEBUG", "ADD", subject, predicate, object)
         store$.next(true)
         resolve(true)
       })
@@ -61,4 +60,17 @@ export const watch = query => {
     .distinctUntilChanged((a, b) => {
       return equals(a, b)
     })
+}
+
+export const deleteFact = ([subject, predicate, object]) => {
+  return Observable.from(
+    new Promise((resolve, reject) => {
+      db.del({ subject, predicate, object }, err => {
+        if (err) reject(err)
+        console.log("DEBUG", "DELETE", subject, predicate, object)
+        store$.next(true)
+        resolve(true)
+      })
+    })
+  )
 }

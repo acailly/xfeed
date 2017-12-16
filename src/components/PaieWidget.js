@@ -76,6 +76,13 @@ class PaieWidget extends PureComponent {
         <Card>
           <ul style={{ textAlign: "left" }}>{cotisations}</ul>
         </Card>
+        <Card>
+          Le montant total des cotisations s'élève à{" "}
+          <FactWidget s={paieId} p="totalCotisationAmountFormatted" />€, ce qui
+          donne un salaire net de <FactWidget s={paieId} p="grossSalary" />€ -{" "}
+          <FactWidget s={paieId} p="totalCotisationAmountFormatted" />€ ={" "}
+          <FactWidget s={paieId} p="netSalaryFormatted" />€
+        </Card>
       </Fragment>
     )
   }
