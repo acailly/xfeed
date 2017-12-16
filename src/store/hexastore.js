@@ -1,4 +1,4 @@
-import Hexastore from 'hexastore'
+import Hexastore from "hexastore"
 
 const facts = new Hexastore()
 

@@ -1,4 +1,10 @@
 {
-    "standard.autoFixOnSave": true,
-    "editor.tabSize": 2
+  "editor.tabSize": 2,
+  // Set the default
+  "editor.formatOnSave": false,
+  // Enable per-language
+  "[javascript]": {
+    "editor.formatOnSave": true
+  },
+  "standard.enable": false
 }
