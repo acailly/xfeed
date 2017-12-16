@@ -21,8 +21,10 @@ export default () => {
     store.addFact(["#paieOctobre", "name", `Paie d'Octobre`]),
     store.addFact(["#paieOctobre", "created", "20171101"]),
     store.addFact(["#paieOctobre", "createdFormatted", "01/11/2017"]),
-    store.addFact(["#paieOctobre", "month", "octobre"]),
-    store.addFact(["#paieOctobre", "salary", "12€"]),
+    store.addFact(["#paieOctobre", "workingHours", 115]),
+    store.addFact(["#paieOctobre", "workingDays", 16]),
+    store.addFact(["#paieOctobre", "hourlyGrossRate", 3.77]),
+    store.addFact(["#paieOctobre", "grossSalary", 433.55]),
 
     store.addFact(["#projetAssMat", "contains", "#paieNovembre"]),
     store.addFact(["#paieNovembre", "is", "paie"]),
