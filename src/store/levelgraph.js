@@ -41,7 +41,7 @@ export const addFact = ([subject, predicate, object]) => {
     new Promise((resolve, reject) => {
       db.put({ subject, predicate, object }, err => {
         if (err) reject(err)
-        console.log("DEBUG", "ADD", subject, predicate, object)
+        // console.log("DEBUG", "ADD", subject, predicate, object)
         store$.next(true)
         resolve(true)
       })
@@ -67,7 +67,7 @@ export const deleteFact = ([subject, predicate, object]) => {
     new Promise((resolve, reject) => {
       db.del({ subject, predicate, object }, err => {
         if (err) reject(err)
-        console.log("DEBUG", "DELETE", subject, predicate, object)
+        // console.log("DEBUG", "DELETE", subject, predicate, object)
         store$.next(true)
         resolve(true)
       })
