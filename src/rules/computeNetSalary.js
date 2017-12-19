@@ -71,9 +71,7 @@ watchEveryPaie$.subscribe(paieId => {
 
   Observable.zip(factsToAdd$, factsToRemove$).subscribe(
     ([factsToAdd, factsToRemove]) => {
-      //TODO Encapsuler dans une seule transaction
-      factsToRemove.forEach(f => store.deleteFact(f))
-      factsToAdd.forEach(f => store.addFact(f))
+      store.transaction(factsToAdd, factsToRemove)
     },
     err => console.error(err)
   )

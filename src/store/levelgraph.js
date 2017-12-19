@@ -1,6 +1,6 @@
 //https://github.com/levelgraph/levelgraph
 
-import { is, cond, T, equals } from "ramda"
+import { is, cond, T, equals, flatten } from "ramda"
 import memdb from "memdb"
 import levelgraph from "levelgraph"
 import { Observable } from "rxjs/Observable"
@@ -11,7 +11,8 @@ const options = {
   joinAlgorithm: "basic"
 }
 
-const db = levelgraph(memdb(), options)
+const innerdb = memdb()
+const db = levelgraph(innerdb, options)
 
 const toLevelGraphValue = cond([[is(Array), v => db.v(v[0])], [T, v => v]])
 
@@ -68,6 +69,27 @@ export const deleteFact = ([subject, predicate, object]) => {
       db.del({ subject, predicate, object }, err => {
         if (err) reject(err)
         // console.log("DEBUG", "DELETE", subject, predicate, object)
+        store$.next(true)
+        resolve(true)
+      })
+    })
+  )
+}
+
+export const transaction = (factsToAdd, factsToDelete) => {
+  const batches = flatten([
+    factsToDelete.map(([subject, predicate, object]) => {
+      return db.generateBatch({ subject, predicate, object }, "del")
+    }),
+    factsToAdd.map(([subject, predicate, object]) => {
+      return db.generateBatch({ subject, predicate, object }, "put")
+    })
+  ])
+
+  return Observable.from(
+    new Promise((resolve, reject) => {
+      innerdb.batch(batches, err => {
+        if (err) reject(err)
         store$.next(true)
         resolve(true)
       })
