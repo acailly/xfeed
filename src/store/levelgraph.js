@@ -52,9 +52,7 @@ export const addFact = ([subject, predicate, object]) => {
 
 export const watch = query => {
   return store$
-    .map(v => {
-      return v
-    })
+    .startWith(true)
     .concatMap(() => {
       return search(query)
     })

@@ -1,25 +1,51 @@
-import { sortBy, prop, complement, isEmpty } from "ramda"
+import { unnest } from "ramda"
 import { Observable } from "rxjs/Observable"
 import store from "../store"
 
-const fetchCotisations = store
-  .watch([
+const whenPaieIsAdded$ = store
+  .watch([[["paieId"], "is", "paie"]])
+  .mergeAll()
+  .pluck("paieId")
+  .distinct()
+
+whenPaieIsAdded$.subscribe(paieId => {
+  const whenPaieChange$ = store.watch([
     ["paie", "cotisation", ["cotisationId"]],
     [["cotisationId"], "name", ["cotisationName"]],
     [["cotisationId"], "base", ["cotisationBase"]],
-    [["cotisationId"], "rate", ["cotisationRate"]]
+    [["cotisationId"], "rate", ["cotisationRate"]],
+    [paieId, "grossSalary", ["grossSalary"]]
   ])
-  .map(sortBy(prop("cotisationBase")))
 
-const fetchGrossSalary = store
-  .watch([[["paieId"], "grossSalary", ["grossSalary"]]])
-  .filter(complement(isEmpty))
+  const factsToRemove$ = whenPaieChange$.mergeMap(existingCotisations =>
+    Observable.from(existingCotisations).mergeMap(
+      ({
+        grossSalary,
+        cotisationId,
+        cotisationName,
+        cotisationBase,
+        cotisationRate
+      }) =>
+        store
+          .search([[paieId, cotisationName, ["amount"]]])
+          .mergeAll()
+          .pluck("amount")
+          .map(amount => [[paieId, cotisationName, amount]])
+          .toArray()
+          .map(unnest)
+    )
+  )
 
-Observable.combineLatest(fetchCotisations, fetchGrossSalary).subscribe(
-  ([cotisations, [{ paieId, grossSalary }]]) => {
-    //TODO Supprimer les anciens faits
-    cotisations.forEach(
-      ({ cotisationId, cotisationName, cotisationBase, cotisationRate }) => {
+  const factsToAdd$ = whenPaieChange$
+    .mergeAll()
+    .map(
+      ({
+        grossSalary,
+        cotisationId,
+        cotisationName,
+        cotisationBase,
+        cotisationRate
+      }) => {
         const amount =
           grossSalary * (cotisationBase / 100.0) * (cotisationRate / 100)
         console.log(
@@ -27,9 +53,16 @@ Observable.combineLatest(fetchCotisations, fetchGrossSalary).subscribe(
             2
           )}€`
         )
-        store.addFact([paieId, cotisationName, amount])
+        return [[paieId, cotisationName, amount]]
       }
     )
-  },
-  err => console.error(err)
-)
+
+  Observable.zip(factsToAdd$, factsToRemove$).subscribe(
+    ([factsToAdd, factsToRemove]) => {
+      // console.log(`Ces faits doivent être ajoutés`, factsToAdd)
+      // console.log(`Ces faits doivent être supprimés`, factsToRemove)
+      store.transaction(factsToAdd, factsToRemove)
+    },
+    err => console.error(err)
+  )
+})

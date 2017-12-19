@@ -2,62 +2,46 @@ import { unnest } from "ramda"
 import { Observable } from "rxjs/Observable"
 import store from "../store"
 
-const watchEveryPaie$ = store
+const whenPaieIsAdded$ = store
   .watch([[["paieId"], "is", "paie"]])
   .mergeAll()
   .pluck("paieId")
   .distinct()
-// .do(paieId => console.log(`Cette paie a changé`, paieId))
 
-watchEveryPaie$.subscribe(paieId => {
-  const watchPaieChange$ = store.watch([
+whenPaieIsAdded$.subscribe(paieId => {
+  const whenPaieChange$ = store.watch([
     [paieId, "grossSalary", ["grossSalary"]],
     [paieId, "totalCotisationAmount", ["totalCotisationAmount"]]
   ])
 
-  const netSalaryFactsToRemove$ = watchPaieChange$.mergeMap(
-    ({ paieId }) =>
-      store
-        .search([[paieId, "netSalary", ["netSalary"]]])
-        .mergeAll()
-        .pluck("netSalary")
-        .map(netSalary => [[paieId, "netSalary", netSalary]])
-        .toArray()
-        .map(unnest)
-    // .do(facts =>
-    //   console.log(
-    //     `Ces faits sur le salaire net doivent être supprimés`,
-    //     facts
-    //   )
-    // )
+  const netSalaryFactsToRemove$ = whenPaieChange$.mergeMap(() =>
+    store
+      .search([[paieId, "netSalary", ["netSalary"]]])
+      .mergeAll()
+      .pluck("netSalary")
+      .map(netSalary => [[paieId, "netSalary", netSalary]])
+      .toArray()
+      .map(unnest)
   )
 
-  const netSalaryFormattedFactsToRemove$ = watchPaieChange$.mergeMap(
-    ({ paieId }) =>
-      store
-        .search([[paieId, "netSalaryFormatted", ["netSalaryFormatted"]]])
-        .mergeAll()
-        .pluck("netSalaryFormatted")
-        .map(netSalaryFormatted => [
-          [paieId, "netSalaryFormatted", netSalaryFormatted]
-        ])
-        .toArray()
-        .map(unnest)
-    // .do(facts =>
-    //   console.log(
-    //     `Ces faits sur le salaire net formatté doivent être supprimés`,
-    //     facts
-    //   )
-    // )
+  const netSalaryFormattedFactsToRemove$ = whenPaieChange$.mergeMap(() =>
+    store
+      .search([[paieId, "netSalaryFormatted", ["netSalaryFormatted"]]])
+      .mergeAll()
+      .pluck("netSalaryFormatted")
+      .map(netSalaryFormatted => [
+        [paieId, "netSalaryFormatted", netSalaryFormatted]
+      ])
+      .toArray()
+      .map(unnest)
   )
 
   const factsToRemove$ = Observable.zip(
     netSalaryFactsToRemove$,
     netSalaryFormattedFactsToRemove$
   ).map(unnest)
-  // .do(facts => console.log(`Ces faits doivent être supprimés`, facts))
 
-  const factsToAdd$ = watchPaieChange$
+  const factsToAdd$ = whenPaieChange$
     .mergeAll()
     .map(({ grossSalary, totalCotisationAmount }) => {
       const amount = grossSalary - totalCotisationAmount
@@ -67,10 +51,11 @@ watchEveryPaie$.subscribe(paieId => {
         [paieId, "netSalaryFormatted", amount.toFixed(2)]
       ]
     })
-  // .do(facts => console.log(`Ces faits doivent être ajoutés`, facts))
 
   Observable.zip(factsToAdd$, factsToRemove$).subscribe(
     ([factsToAdd, factsToRemove]) => {
+      // console.log(`Ces faits doivent être ajoutés`, factsToAdd)
+      // console.log(`Ces faits doivent être supprimés`, factsToRemove)
       store.transaction(factsToAdd, factsToRemove)
     },
     err => console.error(err)

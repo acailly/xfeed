@@ -1,77 +1,83 @@
-import { complement, isEmpty, sum, pluck } from "ramda"
+import { sum, pluck, unnest } from "ramda"
 import { Observable } from "rxjs/Observable"
 import store from "../store"
 
-store
+const whenPaieIsAdded$ = store
   .watch([[["paieId"], "is", "paie"]])
-  .filter(complement(isEmpty))
   .mergeAll()
-  .subscribe(
-    //TODO Supprimer les souscriptions quand les paies changent
-    ({ paieId }) => {
+  .pluck("paieId")
+  .distinct()
+
+whenPaieIsAdded$.subscribe(paieId => {
+  const whenPaieChange$ = store.watch([
+    ["paie", "cotisation", ["cotisationId"]],
+    [["cotisationId"], "name", ["cotisationName"]],
+    [paieId, ["cotisationName"], ["cotisationAmount"]]
+  ])
+
+  const totalCotisationAmountFactsToRemove$ = whenPaieChange$.mergeMap(() =>
+    store
+      .search([[paieId, "totalCotisationAmount", ["totalCotisationAmount"]]])
+      .mergeAll()
+      .pluck("totalCotisationAmount")
+      .map(totalCotisationAmount => [
+        [paieId, "totalCotisationAmount", totalCotisationAmount]
+      ])
+      .toArray()
+      .map(unnest)
+  )
+
+  const totalCotisationAmountFormattedFactsToRemove$ = whenPaieChange$.mergeMap(
+    () =>
       store
-        .watch([
-          ["paie", "cotisation", ["cotisationId"]],
-          [["cotisationId"], "name", ["cotisationName"]],
-          [paieId, ["cotisationName"], ["cotisationAmount"]]
+        .search([
+          [
+            paieId,
+            "totalCotisationAmountFormatted",
+            ["totalCotisationAmountFormatted"]
+          ]
         ])
-        .delayWhen(() => {
-          return Observable.forkJoin(
-            store
-              .search([
-                [paieId, "totalCotisationAmount", ["totalCotisationAmount"]]
-              ])
-              .mergeAll()
-              .pluck("totalCotisationAmount")
-              .do(totalCotisationAmount =>
-                store.deleteFact([
-                  paieId,
-                  "totalCotisationAmount",
-                  totalCotisationAmount
-                ])
-              ),
-            store
-              .search([
-                [
-                  paieId,
-                  "totalCotisationAmountFormatted",
-                  ["totalCotisationAmountFormatted"]
-                ]
-              ])
-              .mergeAll()
-              .pluck("totalCotisationAmountFormatted")
-              .do(totalCotisationAmountFormatted =>
-                store.deleteFact([
-                  paieId,
-                  "totalCotisationAmountFormatted",
-                  totalCotisationAmountFormatted
-                ])
-              )
-          )
-        })
-        .subscribe(
-          cotisations => {
-            const totalCotisationAmount = sum(
-              pluck("cotisationAmount")(cotisations)
-            )
-            console.log(
-              `Computed total cotisation amount for ${paieId}: ${totalCotisationAmount.toFixed(
-                2
-              )}€`
-            )
-            store.addFact([
-              paieId,
-              "totalCotisationAmount",
-              totalCotisationAmount
-            ])
-            store.addFact([
-              paieId,
-              "totalCotisationAmountFormatted",
-              totalCotisationAmount.toFixed(2)
-            ])
-          },
-          err => console.error(err)
-        )
+        .mergeAll()
+        .pluck("totalCotisationAmountFormatted")
+        .map(totalCotisationAmountFormatted => [
+          [
+            paieId,
+            "totalCotisationAmountFormatted",
+            totalCotisationAmountFormatted
+          ]
+        ])
+        .toArray()
+        .map(unnest)
+  )
+
+  const factsToRemove$ = Observable.zip(
+    totalCotisationAmountFactsToRemove$,
+    totalCotisationAmountFormattedFactsToRemove$
+  ).map(unnest)
+
+  const factsToAdd$ = whenPaieChange$.map(cotisations => {
+    const totalCotisationAmount = sum(pluck("cotisationAmount")(cotisations))
+    console.log(
+      `Computed total cotisation amount for ${paieId}: ${totalCotisationAmount.toFixed(
+        2
+      )}€`
+    )
+    return [
+      [paieId, "totalCotisationAmount", totalCotisationAmount],
+      [
+        paieId,
+        "totalCotisationAmountFormatted",
+        totalCotisationAmount.toFixed(2)
+      ]
+    ]
+  })
+
+  Observable.zip(factsToAdd$, factsToRemove$).subscribe(
+    ([factsToAdd, factsToRemove]) => {
+      console.log(`Ces faits doivent être ajoutés`, factsToAdd)
+      console.log(`Ces faits doivent être supprimés`, factsToRemove)
+      store.transaction(factsToAdd, factsToRemove)
     },
     err => console.error(err)
   )
+})
