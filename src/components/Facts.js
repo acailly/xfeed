@@ -1,38 +1,57 @@
 import React, { Component } from "react"
 import cytoscape from "cytoscape"
-import coseBilkent from "cytoscape-cose-bilkent"
-import { nth, uniq, pluck } from "ramda"
+import cycola from "cytoscape-cola"
+import { nth, uniq, pluck, difference, flatten, not, contains } from "ramda"
 import store from "../store"
 
-cytoscape.use(coseBilkent)
+cytoscape.use(cycola)
 
 class Facts extends Component {
   componentDidMount = () => {
     store.watch([[["subject"], ["predicate"], ["object"]]]).subscribe(
       facts => {
-        const subjectNodes = uniq(pluck("subject")(facts)).map(subject => {
+        const subjects = uniq(pluck("subject")(facts))
+        const objects = uniq(pluck("object")(facts))
+        const nonReferencedObjects = difference(objects, subjects)
+
+        const subjectNodes = subjects.map(subject => {
           return {
-            data: { id: subject }
+            data: { id: subject, backgroundColor: "#0D0", label: subject }
           }
         })
 
-        const objectNodes = uniq(pluck("object")(facts)).map(object => {
-          return {
-            data: { id: object }
-          }
-        })
+        const edges = flatten(
+          facts.map(({ subject, predicate, object }) => {
+            const result = []
 
-        const edges = facts.map(({ subject, predicate, object }) => {
-          return {
-            data: {
-              id: `${subject}${predicate}${object}`,
-              source: subject,
-              target: object
+            let objectNodeId = object
+            if (not(contains(object, subjects))) {
+              objectNodeId = `${subject}[${object}]`
+              const objectNode = {
+                data: {
+                  id: objectNodeId,
+                  backgroundColor: "#00D",
+                  label: object
+                }
+              }
+              result.push(objectNode)
             }
-          }
-        })
 
-        const elements = [...subjectNodes, ...objectNodes, ...edges]
+            const edgeNode = {
+              data: {
+                id: `${subject}${predicate}${object}`,
+                label: predicate,
+                source: subject,
+                target: objectNodeId
+              }
+            }
+            result.push(edgeNode)
+
+            return result
+          })
+        )
+
+        const elements = [...subjectNodes, ...edges]
 
         this.setState({
           elements
@@ -58,8 +77,8 @@ class Facts extends Component {
         {
           selector: "node",
           style: {
-            "background-color": "#666",
-            label: "data(id)"
+            "background-color": "data(backgroundColor)",
+            label: "data(label)"
           }
         },
 
@@ -67,6 +86,8 @@ class Facts extends Component {
           selector: "edge",
           style: {
             width: 3,
+            label: "data(label)",
+            color: "#666",
             "line-color": "#ccc",
             "target-arrow-color": "#ccc",
             "target-arrow-shape": "triangle"
@@ -75,9 +96,9 @@ class Facts extends Component {
       ],
 
       layout: {
-        name: "cose-bilkent",
-        idealEdgeLength: 300,
-        nodeOverlap: 40000
+        name: "cola",
+        infinite: true,
+        fit: false
       }
     })
   }
