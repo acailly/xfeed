@@ -34,8 +34,8 @@ class App extends Component {
             flex: "2 1 0",
             display: "flex",
             flexDirection: "column",
-            justifyContent: "center",
-            alignItems: "stretch"
+            alignItems: "stretch",
+            overflow: "auto"
           }}
         >
           <Content />

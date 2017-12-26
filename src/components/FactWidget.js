@@ -3,7 +3,7 @@ import { nth, complement, isEmpty } from "ramda"
 import store from "../store"
 
 class FactWidget extends PureComponent {
-  state = {}
+  state = { hover: false }
 
   componentDidMount = () => {
     const { s, p, o } = this.props
@@ -28,22 +28,42 @@ class FactWidget extends PureComponent {
       )
   }
 
+  handleMouseEnter = () => {
+    this.setState({ hover: true })
+  }
+
+  handleMouseLeave = () => {
+    this.setState({ hover: false })
+  }
+
   render() {
-    const { subject, predicate, object } = this.state
+    const { editable } = this.props
+    const { subject, predicate, object, hover } = this.state
 
     const label = subject || predicate || object || "Error"
 
+    const backgroundColor = hover ? "rgb(32, 156, 238)" : undefined
+    const color = hover ? "white" : undefined
+
     return (
       <span
-        style={{
-          borderColor: "lightblue",
-          borderWidth: "1px",
-          borderStyle: "solid",
-          paddingLeft: "5px",
-          paddingRight: "5px",
-          marginLeft: "5px",
-          marginRight: "5px"
-        }}
+        style={
+          editable && {
+            borderColor: "rgb(32, 156, 238)",
+            borderWidth: "1px",
+            borderStyle: "solid",
+            paddingLeft: "5px",
+            paddingRight: "5px",
+            marginLeft: "5px",
+            marginRight: "5px",
+            borderRadius: "3px",
+            backgroundColor,
+            color,
+            cursor: "pointer"
+          }
+        }
+        onMouseEnter={editable && this.handleMouseEnter}
+        onMouseLeave={editable && this.handleMouseLeave}
       >
         {label}
       </span>

@@ -45,7 +45,7 @@ class Feed extends PureComponent {
           key={itemId}
           title={itemName}
           createdAt={itemCreationDateFormatted}
-          icon={<i className="material-icons md-18">{itemIcon}</i>}
+          icon={<i className="material-icons">{itemIcon}</i>}
         />
       )
     )

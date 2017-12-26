@@ -61,8 +61,8 @@ class PaieWidget extends PureComponent {
         <SubTitle>Travail effectué ce mois çi</SubTitle>
         <Card>
           L'assistante maternelle a travaillé{" "}
-          <FactWidget s={paieId} p="workingHours" /> heures réparties sur{" "}
-          <FactWidget s={paieId} p="workingDays" /> jours
+          <FactWidget s={paieId} p="workingHours" editable /> heures réparties
+          sur <FactWidget s={paieId} p="workingDays" /> jours
         </Card>
         <SubTitle>Salaire brut total</SubTitle>
         <Card>
