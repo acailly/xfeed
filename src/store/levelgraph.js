@@ -41,7 +41,10 @@ export const addFact = ([subject, predicate, object]) => {
   return Observable.from(
     new Promise((resolve, reject) => {
       db.put({ subject, predicate, object }, err => {
-        if (err) reject(err)
+        if (err) {
+          console.error(err)
+          reject(err)
+        }
         // console.log("DEBUG", "ADD", subject, predicate, object)
         store$.next(true)
         resolve(true)
@@ -65,7 +68,10 @@ export const deleteFact = ([subject, predicate, object]) => {
   return Observable.from(
     new Promise((resolve, reject) => {
       db.del({ subject, predicate, object }, err => {
-        if (err) reject(err)
+        if (err) {
+          console.error(err)
+          reject(err)
+        }
         // console.log("DEBUG", "DELETE", subject, predicate, object)
         store$.next(true)
         resolve(true)
@@ -87,7 +93,10 @@ export const transaction = (factsToAdd, factsToDelete) => {
   return Observable.from(
     new Promise((resolve, reject) => {
       innerdb.batch(batches, err => {
-        if (err) reject(err)
+        if (err) {
+          console.error(err)
+          reject(err)
+        }
         store$.next(true)
         resolve(true)
       })

@@ -10,6 +10,8 @@ class Facts extends Component {
   componentDidMount = () => {
     store.watch([[["subject"], ["predicate"], ["object"]]]).subscribe(
       facts => {
+        // console.log("FACTS", JSON.stringify(facts)) //DEBUG
+
         const subjects = uniq(pluck("subject")(facts))
 
         const subjectNodes = subjects.map(subject => {

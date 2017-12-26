@@ -57,11 +57,11 @@ whenPaieIsAdded$.subscribe(paieId => {
 
   const factsToAdd$ = whenPaieChange$.map(cotisations => {
     const totalCotisationAmount = sum(pluck("cotisationAmount")(cotisations))
-    console.log(
-      `Computed total cotisation amount for ${paieId}: ${totalCotisationAmount.toFixed(
-        2
-      )}€`
-    )
+    // console.log(
+    //   `Computed total cotisation amount for ${paieId}: ${totalCotisationAmount.toFixed(
+    //     2
+    //   )}€`
+    // ) //DEBUG
     return [
       [paieId, "totalCotisationAmount", totalCotisationAmount],
       [
@@ -74,8 +74,8 @@ whenPaieIsAdded$.subscribe(paieId => {
 
   Observable.zip(factsToAdd$, factsToRemove$).subscribe(
     ([factsToAdd, factsToRemove]) => {
-      // console.log(`Ces faits doivent être ajoutés`, factsToAdd)
-      // console.log(`Ces faits doivent être supprimés`, factsToRemove)
+      // console.log(`Ces faits doivent être ajoutés`, factsToAdd) //DEBUG
+      // console.log(`Ces faits doivent être supprimés`, factsToRemove) //DEBUG
       store.transaction(factsToAdd, factsToRemove)
     },
     err => console.error(err)

@@ -48,19 +48,19 @@ whenPaieIsAdded$.subscribe(paieId => {
       }) => {
         const amount =
           grossSalary * (cotisationBase / 100.0) * (cotisationRate / 100)
-        console.log(
-          `Computed ${cotisationName} cotisation for ${paieId}: ${amount.toFixed(
-            2
-          )}€`
-        )
+        // console.log(
+        //   `Computed ${cotisationName} cotisation for ${paieId}: ${amount.toFixed(
+        //     2
+        //   )}€`
+        // ) //DEBUG
         return [[paieId, cotisationName, amount]]
       }
     )
 
   Observable.zip(factsToAdd$, factsToRemove$).subscribe(
     ([factsToAdd, factsToRemove]) => {
-      // console.log(`Ces faits doivent être ajoutés`, factsToAdd)
-      // console.log(`Ces faits doivent être supprimés`, factsToRemove)
+      // console.log(`Ces faits doivent être ajoutés`, factsToAdd) //DEBUG
+      // console.log(`Ces faits doivent être supprimés`, factsToRemove) //DEBUG
       store.transaction(factsToAdd, factsToRemove)
     },
     err => console.error(err)

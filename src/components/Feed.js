@@ -2,6 +2,7 @@ import React, { PureComponent } from "react"
 import { Timeline, TimelineEvent } from "react-event-timeline"
 import { sortBy, prop } from "ramda"
 import { Observable } from "rxjs/Observable"
+import { Link } from "react-router-dom"
 import store from "../store"
 
 class Feed extends PureComponent {
@@ -54,6 +55,7 @@ class Feed extends PureComponent {
       <div>
         <h1 style={{ textAlign: "center" }}>{this.state.projectName}</h1>
         <Timeline>{timelineEvents}</Timeline>
+        <Link to="/facts">See facts</Link>
       </div>
     )
   }

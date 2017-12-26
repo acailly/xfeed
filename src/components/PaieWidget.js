@@ -62,14 +62,15 @@ class PaieWidget extends PureComponent {
         <Card>
           L'assistante maternelle a travaillé{" "}
           <FactWidget s={paieId} p="workingHours" editable /> heures réparties
-          sur <FactWidget s={paieId} p="workingDays" /> jours
+          sur <FactWidget s={paieId} p="workingDays" editable /> jours
         </Card>
         <SubTitle>Salaire brut total</SubTitle>
         <Card>
           Le taux horaire brut est de{" "}
-          <FactWidget s={paieId} p="hourlyGrossRate" />€ / heure, ce qui donne
-          un salaire brut total de <FactWidget s={paieId} p="hourlyGrossRate" />€{" "}
-          x <FactWidget s={paieId} p="workingHours" /> heures ={" "}
+          <FactWidget s={paieId} p="hourlyGrossRate" editable />€ / heure, ce
+          qui donne un salaire brut total de{" "}
+          <FactWidget s={paieId} p="hourlyGrossRate" />€ x{" "}
+          <FactWidget s={paieId} p="workingHours" /> heures ={" "}
           <FactWidget s={paieId} p="grossSalary" />€
         </Card>
         <SubTitle>Salaire net</SubTitle>

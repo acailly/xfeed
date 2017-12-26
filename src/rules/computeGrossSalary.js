@@ -28,14 +28,14 @@ whenPaieIsAdded$.subscribe(paieId => {
     .mergeAll()
     .map(({ workingHours, hourlyGrossRate }) => {
       const amount = workingHours * hourlyGrossRate
-      console.log(`Computed gross salary for ${paieId}: ${amount}€`)
+      // console.log(`Computed gross salary for ${paieId}: ${amount}€`) //DEBUG
       return [[paieId, "grossSalary", amount]]
     })
 
   Observable.zip(factsToAdd$, factsToRemove$).subscribe(
     ([factsToAdd, factsToRemove]) => {
-      // console.log(`Ces faits doivent être ajoutés`, factsToAdd)
-      // console.log(`Ces faits doivent être supprimés`, factsToRemove)
+      // console.log(`Ces faits doivent être ajoutés`, factsToAdd) //DEBUG
+      // console.log(`Ces faits doivent être supprimés`, factsToRemove) //DEBUG
       store.transaction(factsToAdd, factsToRemove)
     },
     err => console.error(err)

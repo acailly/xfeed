@@ -3,6 +3,10 @@ import Feed from "./Feed"
 import Content from "./Content"
 
 class App extends Component {
+  componentDidCatch(error, info) {
+    console.error(error)
+  }
+
   render() {
     return (
       <div
