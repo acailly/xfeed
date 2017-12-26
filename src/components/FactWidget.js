@@ -1,4 +1,4 @@
-import React, { PureComponent, Fragment } from "react"
+import React, { PureComponent } from "react"
 import { nth, complement, isEmpty } from "ramda"
 import store from "../store"
 
@@ -33,7 +33,21 @@ class FactWidget extends PureComponent {
 
     const label = subject || predicate || object || "Error"
 
-    return <Fragment>{label}</Fragment>
+    return (
+      <span
+        style={{
+          borderColor: "lightblue",
+          borderWidth: "1px",
+          borderStyle: "solid",
+          paddingLeft: "5px",
+          paddingRight: "5px",
+          marginLeft: "5px",
+          marginRight: "5px"
+        }}
+      >
+        {label}
+      </span>
+    )
   }
 }
 
