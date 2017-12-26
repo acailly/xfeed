@@ -1,7 +1,7 @@
 import React, { Component } from "react"
 import cytoscape from "cytoscape"
 import cycola from "cytoscape-cola"
-import { nth, uniq, pluck, difference, flatten, not, contains } from "ramda"
+import { uniq, pluck, flatten, not, contains } from "ramda"
 import store from "../store"
 
 cytoscape.use(cycola)
@@ -11,8 +11,6 @@ class Facts extends Component {
     store.watch([[["subject"], ["predicate"], ["object"]]]).subscribe(
       facts => {
         const subjects = uniq(pluck("subject")(facts))
-        const objects = uniq(pluck("object")(facts))
-        const nonReferencedObjects = difference(objects, subjects)
 
         const subjectNodes = subjects.map(subject => {
           return {

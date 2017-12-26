@@ -2,13 +2,13 @@ import React from "react"
 import ReactDOM from "react-dom"
 import { BrowserRouter as Router, Route } from "react-router-dom"
 import "./index.css"
+import "./startup"
 import registerServiceWorker from "./registerServiceWorker"
-import "./rxjs-operators"
 import App from "./components/App"
 import Facts from "./components/Facts"
-import onStartup from "./onStartup"
+import addInitialFacts from "./addInitialFacts"
 
-onStartup().then(() => {
+addInitialFacts().then(() => {
   ReactDOM.render(
     <Router>
       <div>
