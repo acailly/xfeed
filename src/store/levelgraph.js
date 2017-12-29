@@ -39,6 +39,8 @@ export const search$ = function() {
 
 const store$ = new Subject()
 
+export const changed$ = () => store$.asObservable()
+
 export const addFact = ([subject, predicate, object]) => {
   return new Promise((resolve, reject) => {
     db.put({ subject, predicate, object }, err => {
