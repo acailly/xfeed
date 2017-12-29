@@ -13,7 +13,7 @@ class FactWidget extends PureComponent {
     const object = o || ["_object_"]
 
     store
-      .watch([[subject, predicate, object]])
+      .watch$([[subject, predicate, object]])
       .filter(complement(isEmpty))
       .map(nth(0))
       .subscribe(

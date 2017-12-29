@@ -3,20 +3,20 @@ import { Observable } from "rxjs/Observable"
 import store from "../store"
 
 const whenPaieIsAdded$ = store
-  .watch([[["paieId"], "is", "paie"]])
+  .watch$([[["paieId"], "is", "paie"]])
   .mergeAll()
   .pluck("paieId")
   .distinct()
 
 whenPaieIsAdded$.subscribe(paieId => {
-  const whenPaieChange$ = store.watch([
+  const whenPaieChange$ = store.watch$([
     [paieId, "workingHours", ["workingHours"]],
     [paieId, "hourlyGrossRate", ["hourlyGrossRate"]]
   ])
 
   const factsToRemove$ = whenPaieChange$.mergeMap(() =>
     store
-      .search([[paieId, "grossSalary", ["grossSalary"]]])
+      .search$([[paieId, "grossSalary", ["grossSalary"]]])
       .mergeAll()
       .pluck("grossSalary")
       .map(grossSalary => [[paieId, "grossSalary", grossSalary]])
@@ -36,7 +36,7 @@ whenPaieIsAdded$.subscribe(paieId => {
     ([factsToAdd, factsToRemove]) => {
       // console.log(`Ces faits doivent être ajoutés`, factsToAdd) //DEBUG
       // console.log(`Ces faits doivent être supprimés`, factsToRemove) //DEBUG
-      store.transaction(factsToAdd, factsToRemove)
+      store.transaction$(factsToAdd, factsToRemove)
     },
     err => console.error(err)
   )

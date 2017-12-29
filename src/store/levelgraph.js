@@ -25,39 +25,43 @@ export const search = queries => {
     return { subject, predicate, object }
   })
 
-  return Observable.from(
-    new Promise((resolve, reject) => {
-      db.search(levelgraphQueries, (err, results) => {
-        if (err) reject(err)
-        resolve(results)
-      })
+  return new Promise((resolve, reject) => {
+    db.search(levelgraphQueries, (err, results) => {
+      if (err) reject(err)
+      resolve(results)
     })
-  )
+  })
+}
+
+export const search$ = function() {
+  return Observable.from(search(...arguments))
 }
 
 const store$ = new Subject()
 
 export const addFact = ([subject, predicate, object]) => {
-  return Observable.from(
-    new Promise((resolve, reject) => {
-      db.put({ subject, predicate, object }, err => {
-        if (err) {
-          console.error(err)
-          reject(err)
-        }
-        // console.log("DEBUG", "ADD", subject, predicate, object)
-        store$.next(true)
-        resolve(true)
-      })
+  return new Promise((resolve, reject) => {
+    db.put({ subject, predicate, object }, err => {
+      if (err) {
+        console.error(err)
+        reject(err)
+      }
+      // console.log("DEBUG", "ADD", subject, predicate, object)
+      store$.next(true)
+      resolve(true)
     })
-  )
+  })
 }
 
-export const watch = query => {
+export const addFact$ = function() {
+  return Observable.from(addFact(...arguments))
+}
+
+export const watch$ = query => {
   return store$
     .startWith(true)
     .concatMap(() => {
-      return search(query)
+      return search$(query)
     })
     .distinctUntilChanged((a, b) => {
       return equals(a, b)
@@ -65,19 +69,21 @@ export const watch = query => {
 }
 
 export const deleteFact = ([subject, predicate, object]) => {
-  return Observable.from(
-    new Promise((resolve, reject) => {
-      db.del({ subject, predicate, object }, err => {
-        if (err) {
-          console.error(err)
-          reject(err)
-        }
-        // console.log("DEBUG", "DELETE", subject, predicate, object)
-        store$.next(true)
-        resolve(true)
-      })
+  return new Promise((resolve, reject) => {
+    db.del({ subject, predicate, object }, err => {
+      if (err) {
+        console.error(err)
+        reject(err)
+      }
+      // console.log("DEBUG", "DELETE", subject, predicate, object)
+      store$.next(true)
+      resolve(true)
     })
-  )
+  })
+}
+
+export const deleteFact$ = function() {
+  return Observable.from(deleteFact(...arguments))
 }
 
 export const transaction = (factsToAdd, factsToDelete) => {
@@ -90,16 +96,18 @@ export const transaction = (factsToAdd, factsToDelete) => {
     })
   ])
 
-  return Observable.from(
-    new Promise((resolve, reject) => {
-      innerdb.batch(batches, err => {
-        if (err) {
-          console.error(err)
-          reject(err)
-        }
-        store$.next(true)
-        resolve(true)
-      })
+  return new Promise((resolve, reject) => {
+    innerdb.batch(batches, err => {
+      if (err) {
+        console.error(err)
+        reject(err)
+      }
+      store$.next(true)
+      resolve(true)
     })
-  )
+  })
+}
+
+export const transaction$ = function() {
+  return Observable.from(transaction(...arguments))
 }

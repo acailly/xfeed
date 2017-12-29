@@ -15,13 +15,13 @@ class Feed extends PureComponent {
     const { projectId } = this.props
 
     const fetchProjectName = store
-      .watch([[projectId, "name", ["projectName"]]])
+      .watch$([[projectId, "name", ["projectName"]]])
       .mergeAll()
       .take(1)
       .pluck("projectName")
 
     const fetchTimelineEvents = store
-      .watch([
+      .watch$([
         [projectId, "contains", ["itemId"]],
         [["itemId"], "name", ["itemName"]],
         [["itemId"], "created", ["itemCreationDate"]],
