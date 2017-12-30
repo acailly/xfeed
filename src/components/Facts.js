@@ -8,7 +8,7 @@ cytoscape.use(cycola)
 
 class Facts extends Component {
   componentDidMount = () => {
-    store.watch$([[["subject"], ["predicate"], ["object"]]]).subscribe(
+    store.watchFacts$([[["subject"], ["predicate"], ["object"]]]).subscribe(
       facts => {
         // console.log("FACTS", JSON.stringify(facts)) //DEBUG
 

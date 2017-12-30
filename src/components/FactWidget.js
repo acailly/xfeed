@@ -1,5 +1,5 @@
 import React, { PureComponent } from "react"
-import { nth, complement, isEmpty } from "ramda"
+import { identity } from "ramda"
 import store from "../store"
 
 class FactWidget extends PureComponent {
@@ -13,9 +13,8 @@ class FactWidget extends PureComponent {
     const object = o || ["_object_"]
 
     store
-      .watch$([[subject, predicate, object]])
-      .filter(complement(isEmpty))
-      .map(nth(0))
+      .watchSingleFact$([[subject, predicate, object]])
+      .filter(identity)
       .subscribe(
         fact => {
           this.setState({

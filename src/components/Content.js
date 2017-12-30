@@ -10,7 +10,10 @@ class Content extends PureComponent {
     const { subject } = this.props
 
     store
-      .search$([[subject, "is", ["type"]], [["type"], "render", ["widget"]]])
+      .searchFacts$([
+        [subject, "is", ["type"]],
+        [["type"], "render", ["widget"]]
+      ])
       .subscribe(
         results => this.setState(results.map(prop("widget"))),
         err => console.error(err)

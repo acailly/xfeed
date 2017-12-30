@@ -14,7 +14,7 @@ class PaieWidget extends PureComponent {
     const { paieId } = this.props
 
     store
-      .watch$([
+      .watchFacts$([
         ["paie", "cotisation", ["cotisationId"]],
         [["cotisationId"], "name", ["cotisationName"]],
         [["cotisationId"], "base", ["cotisationBase"]],

@@ -2,7 +2,7 @@ import store from "./store"
 import "./rules"
 
 //DEBUG
-window.search = v => store.search(v).then(r => console.log(r))
+window.search = v => store.searchFacts(v).then(r => console.log(r))
 
 export default () => {
   return Promise.all([

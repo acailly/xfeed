@@ -7,7 +7,7 @@ import { Subject } from "rxjs/Subject"
 
 const facts = new Hexastore()
 
-export const search = queries => Observable.of(facts.search(queries))
+export const searchFacts = queries => Observable.of(facts.search(queries))
 
 const store$ = new Subject()
 
@@ -22,7 +22,7 @@ export const watch = query => {
   return store$
     .startWith(true)
     .concatMap(() => {
-      return search(query)
+      return searchFacts(query)
     })
     .distinctUntilChanged((a, b) => {
       return equals(a, b)
