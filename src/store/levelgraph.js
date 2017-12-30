@@ -57,7 +57,9 @@ const store$ = new Subject()
 
 export const changed$ = () => store$.asObservable()
 
-export const addFact = ([subject, predicate, object]) => {
+export const notifyAll = () => store$.next(true)
+
+export const addFact = ([subject, predicate, object], notify = true) => {
   return new Promise((resolve, reject) => {
     db.put({ subject, predicate, object }, err => {
       if (err) {
@@ -65,7 +67,7 @@ export const addFact = ([subject, predicate, object]) => {
         reject(err)
       }
       // console.log("DEBUG", "ADD", subject, predicate, object)
-      store$.next(true)
+      if (notify) notifyAll()
       resolve(true)
     })
   })
@@ -75,12 +77,15 @@ export const addFact$ = function() {
   return Observable.from(addFact(...arguments))
 }
 
-export const addSingleFact = ([subject, predicate, object]) => {
-  return searchFacts([[subject, predicate, ["someObject"]]]).then(
-    factsToRemove => {
-      return transaction([[subject, predicate, object]], factsToRemove)
-    }
-  )
+export const addSingleFact = ([subject, predicate, object], notify = true) => {
+  return searchFacts([[subject, predicate, ["someObject"]]]).then(results => {
+    const factsToRemove = results.map(({ someObject }) => [
+      subject,
+      predicate,
+      someObject
+    ])
+    return transaction([[subject, predicate, object]], factsToRemove, notify)
+  })
 }
 
 export const addSingleFact$ = function() {
@@ -109,7 +114,7 @@ export const watchSingleFact$ = query => {
     })
 }
 
-export const deleteFact = ([subject, predicate, object]) => {
+export const deleteFact = ([subject, predicate, object], notify = true) => {
   return new Promise((resolve, reject) => {
     db.del({ subject, predicate, object }, err => {
       if (err) {
@@ -117,7 +122,7 @@ export const deleteFact = ([subject, predicate, object]) => {
         reject(err)
       }
       // console.log("DEBUG", "DELETE", subject, predicate, object)
-      store$.next(true)
+      if (notify) notifyAll()
       resolve(true)
     })
   })
@@ -127,7 +132,7 @@ export const deleteFact$ = function() {
   return Observable.from(deleteFact(...arguments))
 }
 
-export const transaction = (factsToAdd, factsToDelete) => {
+export const transaction = (factsToAdd, factsToDelete, notify = true) => {
   const batches = flatten([
     factsToDelete.map(([subject, predicate, object]) => {
       return db.generateBatch({ subject, predicate, object }, "del")
@@ -143,7 +148,7 @@ export const transaction = (factsToAdd, factsToDelete) => {
         console.error(err)
         reject(err)
       }
-      store$.next(true)
+      if (notify) notifyAll()
       resolve(true)
     })
   })

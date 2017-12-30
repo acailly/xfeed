@@ -1,5 +1,4 @@
-import { unnest } from "ramda"
-import { Observable } from "rxjs/Observable"
+import { identity } from "ramda"
 import store from "../store"
 
 const whenPaieIsAdded$ = store
@@ -8,56 +7,26 @@ const whenPaieIsAdded$ = store
   .pluck("paieId")
   .distinct()
 
-whenPaieIsAdded$.subscribe(paieId => {
-  const whenPaieChange$ = store.watchFacts$([
-    [paieId, "grossSalary", ["grossSalary"]],
-    [paieId, "totalCotisationAmount", ["totalCotisationAmount"]]
-  ])
-
-  const netSalaryFactsToRemove$ = whenPaieChange$.mergeMap(() =>
+whenPaieIsAdded$.subscribe(
+  paieId => {
     store
-      .searchFacts$([[paieId, "netSalary", ["netSalary"]]])
-      .mergeAll()
-      .pluck("netSalary")
-      .map(netSalary => [[paieId, "netSalary", netSalary]])
-      .toArray()
-      .map(unnest)
-  )
-
-  const netSalaryFormattedFactsToRemove$ = whenPaieChange$.mergeMap(() =>
-    store
-      .searchFacts$([[paieId, "netSalaryFormatted", ["netSalaryFormatted"]]])
-      .mergeAll()
-      .pluck("netSalaryFormatted")
-      .map(netSalaryFormatted => [
-        [paieId, "netSalaryFormatted", netSalaryFormatted]
+      .watchSingleFact$([
+        [paieId, "grossSalary", ["grossSalary"]],
+        [paieId, "totalCotisationAmount", ["totalCotisationAmount"]]
       ])
-      .toArray()
-      .map(unnest)
-  )
+      .filter(identity)
+      .subscribe(
+        async ({ grossSalary, totalCotisationAmount }) => {
+          const netSalary = grossSalary - totalCotisationAmount
 
-  const factsToRemove$ = Observable.zip(
-    netSalaryFactsToRemove$,
-    netSalaryFormattedFactsToRemove$
-  ).map(unnest)
-
-  const factsToAdd$ = whenPaieChange$
-    .mergeAll()
-    .map(({ grossSalary, totalCotisationAmount }) => {
-      const amount = grossSalary - totalCotisationAmount
-      // console.log(`Computed net salary for ${paieId}: ${amount}€`) //DEBUG
-      return [
-        [paieId, "netSalary", amount],
-        [paieId, "netSalaryFormatted", amount.toFixed(2)]
-      ]
-    })
-
-  Observable.zip(factsToAdd$, factsToRemove$).subscribe(
-    ([factsToAdd, factsToRemove]) => {
-      // console.log(`Ces faits doivent être ajoutés`, factsToAdd) //DEBUG
-      // console.log(`Ces faits doivent être supprimés`, factsToRemove) //DEBUG
-      store.transaction$(factsToAdd, factsToRemove)
-    },
-    err => console.error(err)
-  )
-})
+          await store.addSingleFact([paieId, "netSalary", netSalary], false)
+          await store.addSingleFact(
+            [paieId, "netSalaryFormatted", netSalary.toFixed(2)],
+            true
+          )
+        },
+        err => console.error(err)
+      )
+  },
+  err => console.error(err)
+)

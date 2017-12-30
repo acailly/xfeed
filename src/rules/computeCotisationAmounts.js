@@ -1,5 +1,3 @@
-import { unnest } from "ramda"
-import { Observable } from "rxjs/Observable"
 import store from "../store"
 
 const whenPaieIsAdded$ = store
@@ -8,37 +6,17 @@ const whenPaieIsAdded$ = store
   .pluck("paieId")
   .distinct()
 
-whenPaieIsAdded$.subscribe(paieId => {
-  const whenPaieChange$ = store.watchFacts$([
-    ["paie", "cotisation", ["cotisationId"]],
-    [["cotisationId"], "name", ["cotisationName"]],
-    [["cotisationId"], "base", ["cotisationBase"]],
-    [["cotisationId"], "rate", ["cotisationRate"]],
-    [paieId, "grossSalary", ["grossSalary"]]
-  ])
+whenPaieIsAdded$.subscribe(
+  paieId => {
+    const cotisations$ = store.watchFacts$([
+      ["paie", "cotisation", ["cotisationId"]],
+      [["cotisationId"], "name", ["cotisationName"]],
+      [["cotisationId"], "base", ["cotisationBase"]],
+      [["cotisationId"], "rate", ["cotisationRate"]],
+      [paieId, "grossSalary", ["grossSalary"]]
+    ])
 
-  const factsToRemove$ = whenPaieChange$.mergeMap(existingCotisations =>
-    Observable.from(existingCotisations).mergeMap(
-      ({
-        grossSalary,
-        cotisationId,
-        cotisationName,
-        cotisationBase,
-        cotisationRate
-      }) =>
-        store
-          .searchFacts$([[paieId, cotisationName, ["amount"]]])
-          .mergeAll()
-          .pluck("amount")
-          .map(amount => [[paieId, cotisationName, amount]])
-          .toArray()
-          .map(unnest)
-    )
-  )
-
-  const factsToAdd$ = whenPaieChange$
-    .mergeAll()
-    .map(
+    cotisations$.mergeAll().subscribe(
       ({
         grossSalary,
         cotisationId,
@@ -48,21 +26,10 @@ whenPaieIsAdded$.subscribe(paieId => {
       }) => {
         const amount =
           grossSalary * (cotisationBase / 100.0) * (cotisationRate / 100)
-        // console.log(
-        //   `Computed ${cotisationName} cotisation for ${paieId}: ${amount.toFixed(
-        //     2
-        //   )}€`
-        // ) //DEBUG
-        return [[paieId, cotisationName, amount]]
-      }
+        store.addSingleFact([paieId, cotisationName, amount])
+      },
+      err => console.error(err)
     )
-
-  Observable.zip(factsToAdd$, factsToRemove$).subscribe(
-    ([factsToAdd, factsToRemove]) => {
-      // console.log(`Ces faits doivent être ajoutés`, factsToAdd) //DEBUG
-      // console.log(`Ces faits doivent être supprimés`, factsToRemove) //DEBUG
-      store.transaction$(factsToAdd, factsToRemove)
-    },
-    err => console.error(err)
-  )
-})
+  },
+  err => console.error(err)
+)
