@@ -5,11 +5,12 @@ Everything is a feed
 
 ## Thanks
 
-- Lisp for telling that everything could be structured with simple structures
-- Redux for storing the state at one place
-- Hexastore for the nice syntax
-- LevelGraph for showing that creating a nice thins can only take a night
-- React for bringing more functional programming in the way of handling components
-- Datomic for telling that facts based models are good 
-- Eve for showing that you can create complex thins with only facts and some logic
-
+- (Lisp)[https://en.wikipedia.org/wiki/Lisp_(programming_language)] for telling that everything could be structured with simple structures
+- (Redux)[https://redux.js.org/] for storing the state at one place
+- (@crubier's Hexastore)[http://crubier.github.io/Hexastore/] for the nice syntax
+- (LevelGraph)[http://nodejsconfit.levelgraph.io/] for showing that creating a nice thins can only take a night
+- (React)[https://reactjs.org/] for bringing more functional programming in the UI
+- (Datomic)[https://www.youtube.com/watch?v=Cym4TZwTCNU&feature=youtu.be] for telling that facts based models are good 
+- (Eve)[http://eve-lang.com/] for showing that you can create complex thins with only facts and rules
+- (redux-graph)[https://github.com/cape-io/redux-graph] for the idea of distinguishing single and multiple facts
+- (@Thinkmill's react-markings)[http://thejameskyle.com/react-markings] for showing you can tweak markdown renderers to add some custom components
