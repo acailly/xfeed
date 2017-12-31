@@ -2,25 +2,19 @@ import React, { PureComponent } from "react"
 import { identity } from "ramda"
 import store from "../store"
 
-class FactWidget extends PureComponent {
+class F extends PureComponent {
   state = { hover: false, editing: false, editingValue: undefined }
 
   componentDidMount = () => {
-    const { s, p, o } = this.props
-
-    const subject = s || ["_subject_"]
-    const predicate = p || ["_predicate_"]
-    const object = o || ["_object_"]
+    const { s, p } = this.props
 
     store
-      .watchSingleFact$([[subject, predicate, object]])
+      .watchSingleFact$([[s, p, ["o"]]])
       .filter(identity)
       .subscribe(
         fact => {
           this.setState({
-            subject: s ? undefined : fact._subject_,
-            predicate: p ? undefined : fact._predicate_,
-            object: o ? undefined : fact._object_
+            o: fact.o
           })
         },
         err => console.error(err)
@@ -46,45 +40,24 @@ class FactWidget extends PureComponent {
   handleSubmit = event => {
     event.preventDefault()
 
-    const { s, p, o } = this.props
-    const { editingValue, subject, predicate, object } = this.state
+    const { s, p } = this.props
+    const { editingValue, o } = this.state
 
     const factsToRemove = []
 
-    const oldSubject = s || subject
-    const oldPredicate = p || predicate
-    const oldObject = o || object
-
-    if (oldSubject && oldPredicate && oldObject) {
-      factsToRemove.push([oldSubject, oldPredicate, oldObject])
+    if (s && p && o) {
+      factsToRemove.push([s, p, o])
     }
 
-    const factsToAdd = []
+    const factsToAdd = [[s, p, editingValue]]
 
-    let newSubject = oldSubject
-    let newPredicate = oldPredicate
-    let newObject = oldObject
-    if (!s) {
-      newSubject = editingValue
-    } else if (!p) {
-      newPredicate = editingValue
-    } else if (!o) {
-      newObject = editingValue
-    } else {
-      throw new Error("Error")
-    }
-
-    factsToAdd.push([newSubject, newPredicate, newObject])
-
-    store.transaction(factsToAdd, factsToRemove).subscribe(
+    store.transaction$(factsToAdd, factsToRemove).subscribe(
       () => {
         this.setState({
           hover: false,
           editing: false,
           editingValue: undefined,
-          subject: s ? undefined : newSubject,
-          predicate: p ? undefined : newPredicate,
-          object: o ? undefined : newObject
+          o: editingValue
         })
       },
       err => console.error(err)
@@ -93,9 +66,9 @@ class FactWidget extends PureComponent {
 
   render() {
     const { editable } = this.props
-    const { subject, predicate, object, hover, editing } = this.state
+    const { o, hover, editing } = this.state
 
-    const label = subject || predicate || object || "Error"
+    const label = o || "Error"
 
     //TODO Mettre l'édition dans une popup
     const editingForm = (
@@ -121,19 +94,21 @@ class FactWidget extends PureComponent {
     return (
       <span
         style={
-          editable && {
-            borderColor: "rgb(32, 156, 238)",
-            borderWidth: "1px",
-            borderStyle: "solid",
-            paddingLeft: "5px",
-            paddingRight: "5px",
-            marginLeft: "5px",
-            marginRight: "5px",
-            borderRadius: "3px",
-            backgroundColor,
-            color,
-            cursor: "pointer"
-          }
+          editable
+            ? {
+                borderColor: "rgb(32, 156, 238)",
+                borderWidth: "1px",
+                borderStyle: "solid",
+                paddingLeft: "5px",
+                paddingRight: "5px",
+                marginLeft: "5px",
+                marginRight: "5px",
+                borderRadius: "3px",
+                backgroundColor,
+                color,
+                cursor: "pointer"
+              }
+            : {}
         }
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
@@ -146,4 +121,4 @@ class FactWidget extends PureComponent {
   }
 }
 
-export default FactWidget
+export default F

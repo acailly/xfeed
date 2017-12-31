@@ -26,7 +26,7 @@ whenPaieIsAdded$.subscribe(
       }) => {
         const amount =
           grossSalary * (cotisationBase / 100.0) * (cotisationRate / 100)
-        store.addSingleFact([paieId, cotisationName, amount])
+        store.addSingleFact([paieId, cotisationId, amount])
       },
       err => console.error(err)
     )

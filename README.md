@@ -13,4 +13,4 @@ Everything is a feed
 - (Datomic)[https://www.youtube.com/watch?v=Cym4TZwTCNU&feature=youtu.be] for telling that facts based models are good 
 - (Eve)[http://eve-lang.com/] for showing that you can create complex thins with only facts and rules
 - (redux-graph)[https://github.com/cape-io/redux-graph] for the idea of distinguishing single and multiple facts
-- (@Thinkmill's react-markings)[http://thejameskyle.com/react-markings] for showing you can tweak markdown renderers to add some custom components
+- (react-showdown)[https://github.com/jerolimov/react-showdown] for rendering react components into markdown

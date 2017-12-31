@@ -1,7 +1,8 @@
 import React, { PureComponent, Fragment } from "react"
 import { prop } from "ramda"
+import LoadMarkdown from "./LoadMarkdown"
 import store from "../store"
-import PaieWidget from "./PaieWidget"
+import paieWidgetMarkdown from "../pages/PaieWidget.md"
 
 class Content extends PureComponent {
   state = null
@@ -25,7 +26,10 @@ class Content extends PureComponent {
 
     return (
       <Fragment>
-        <PaieWidget paieId="#paieOctobre" />
+        <LoadMarkdown
+          contentFile={paieWidgetMarkdown}
+          rootSubject="#paieOctobre"
+        />
       </Fragment>
     )
   }

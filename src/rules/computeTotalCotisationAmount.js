@@ -11,8 +11,7 @@ whenPaieIsAdded$.subscribe(
   paieId => {
     const cotisations$ = store.watchFacts$([
       ["paie", "cotisation", ["cotisationId"]],
-      [["cotisationId"], "name", ["cotisationName"]],
-      [paieId, ["cotisationName"], ["cotisationAmount"]]
+      [paieId, ["cotisationId"], ["cotisationAmount"]]
     ])
 
     cotisations$.subscribe(

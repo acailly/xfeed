@@ -34,12 +34,14 @@ class App extends Component {
         </div>
         <div
           style={{
-            background: "lightgreen",
+            background: "white",
             flex: "2 1 0",
             display: "flex",
             flexDirection: "column",
             alignItems: "stretch",
-            overflow: "auto"
+            overflow: "auto",
+            paddingLeft: "30px",
+            paddingRight: "30px"
           }}
         >
           <Content />
