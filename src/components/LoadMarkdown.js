@@ -31,6 +31,8 @@ class LoadMarkdown extends PureComponent {
   }
 
   render() {
+    if (!this.state.content) return null
+
     const resolvedContent = template(
       this.state.content,
       {
@@ -38,6 +40,7 @@ class LoadMarkdown extends PureComponent {
       },
       { partial: true }
     )
+
     return (
       <Markdown
         markup={resolvedContent}

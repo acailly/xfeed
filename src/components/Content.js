@@ -1,34 +1,50 @@
 import React, { PureComponent, Fragment } from "react"
-import { prop } from "ramda"
+import { identity } from "ramda"
 import LoadMarkdown from "./LoadMarkdown"
 import store from "../store"
-import paieWidgetMarkdown from "../pages/PaieWidget.md"
 
 class Content extends PureComponent {
-  state = null
+  state = {}
+  subscription = null
 
   componentDidMount = () => {
-    const { subject } = this.props
+    this.update()
+  }
 
-    store
-      .searchFacts$([
-        [subject, "is", ["type"]],
-        [["type"], "render", ["widget"]]
+  componentDidUpdate = () => {
+    this.update()
+  }
+
+  update = () => {
+    const { selected } = this.props
+
+    if (this.subscription) {
+      this.subscription.unsubscribe()
+    }
+
+    this.subscription = store
+      .watchSingleFact$([
+        [selected, "is", ["type"]],
+        [["type"], "render", ["page"]]
       ])
+      .filter(identity)
       .subscribe(
-        results => this.setState(results.map(prop("widget"))),
+        async ({ page }) => {
+          const contentFile = await import("../pages/" + page)
+          this.setState({ contentFile })
+        },
         err => console.error(err)
       )
   }
 
   render() {
-    //TODO Instantier les widget selon les types stockés dans this.state
+    if (!this.state.contentFile) return null
 
     return (
       <Fragment>
         <LoadMarkdown
-          contentFile={paieWidgetMarkdown}
-          rootSubject="#paieOctobre"
+          contentFile={this.state.contentFile}
+          rootSubject={this.props.selected}
         />
       </Fragment>
     )

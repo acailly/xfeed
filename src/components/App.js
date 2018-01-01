@@ -8,6 +8,8 @@ class App extends Component {
   }
 
   render() {
+    const { subject, selected } = this.props.match.params
+
     return (
       <div
         style={{
@@ -30,7 +32,7 @@ class App extends Component {
             alignItems: "center"
           }}
         >
-          <Feed projectId="#projetAssMat" />
+          <Feed subject={subject} selected={selected} />
         </div>
         <div
           style={{
@@ -44,7 +46,7 @@ class App extends Component {
             paddingRight: "30px"
           }}
         >
-          <Content />
+          <Content selected={selected} />
         </div>
       </div>
     )

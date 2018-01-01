@@ -1,6 +1,11 @@
 import React from "react"
 import ReactDOM from "react-dom"
-import { BrowserRouter as Router, Route } from "react-router-dom"
+import {
+  BrowserRouter as Router,
+  Route,
+  Switch,
+  Redirect
+} from "react-router-dom"
 import "./index.css"
 import "./startup"
 import registerServiceWorker from "./registerServiceWorker"
@@ -11,10 +16,11 @@ import addInitialFacts from "./addInitialFacts"
 addInitialFacts().then(() => {
   ReactDOM.render(
     <Router>
-      <div>
-        <Route exact path="/" component={App} />
-        <Route path="/facts" component={Facts} />
-      </div>
+      <Switch>
+        <Redirect exact from="/" to="/projetAssMat/paieOctobre" />
+        <Route path="/:subject/:selected" component={App} />
+        <Route path="/debug/facts" component={Facts} />
+      </Switch>
     </Router>,
     document.getElementById("root")
   )

@@ -1,8 +1,9 @@
 import React, { PureComponent } from "react"
 import { Timeline, TimelineEvent } from "react-event-timeline"
-import { sortBy, prop } from "ramda"
+import { sortBy, prop, identity } from "ramda"
 import { Observable } from "rxjs/Observable"
 import { Link } from "react-router-dom"
+import { withRouter } from "react-router"
 import store from "../store"
 
 class Feed extends PureComponent {
@@ -12,17 +13,16 @@ class Feed extends PureComponent {
   }
 
   componentDidMount = () => {
-    const { projectId } = this.props
+    const { subject } = this.props
 
-    const fetchProjectName = store
-      .watchFacts$([[projectId, "name", ["projectName"]]])
-      .mergeAll()
-      .take(1)
-      .pluck("projectName")
+    const fetchSubjectName = store
+      .watchSingleFact$([[subject, "name", ["subjectName"]]])
+      .filter(identity)
+      .pluck("subjectName")
 
     const fetchTimelineEvents = store
       .watchFacts$([
-        [projectId, "contains", ["itemId"]],
+        [subject, "contains", ["itemId"]],
         [["itemId"], "name", ["itemName"]],
         [["itemId"], "created", ["itemCreationDate"]],
         [["itemId"], "createdFormatted", ["itemCreationDateFormatted"]],
@@ -31,34 +31,48 @@ class Feed extends PureComponent {
       ])
       .map(sortBy(prop("itemCreationDate")))
 
-    Observable.combineLatest(fetchProjectName, fetchTimelineEvents).subscribe(
-      ([projectName, items]) => {
-        this.setState({ projectName, items })
+    Observable.combineLatest(fetchSubjectName, fetchTimelineEvents).subscribe(
+      ([subjectName, items]) => {
+        this.setState({ subjectName, items })
       },
       err => console.error(err)
     )
   }
 
   render() {
+    const { history, subject, selected } = this.props
+
     const timelineEvents = this.state.items.map(
-      ({ itemId, itemName, itemIcon, itemCreationDateFormatted }) => (
-        <TimelineEvent
-          key={itemId}
-          title={itemName}
-          createdAt={itemCreationDateFormatted}
-          icon={<i className="material-icons">{itemIcon}</i>}
-        />
-      )
+      ({ itemId, itemName, itemIcon, itemCreationDateFormatted }) => {
+        const isSelected = itemId === selected
+        return (
+          <TimelineEvent
+            key={itemId}
+            title={itemName}
+            bubbleStyle={{
+              backgroundColor: isSelected ? "lightgreen" : "white"
+            }}
+            style={{ cursor: "pointer" }}
+            createdAt={itemCreationDateFormatted}
+            icon={<i className="material-icons">{itemIcon}</i>}
+            onClick={() =>
+              /** TODO ACY Ca ne rafraichit pas la page, ca a l'air d'être au niveau du composant <Markdown> **/ history.push(
+                `/${subject}/${itemId}`
+              )
+            }
+          />
+        )
+      }
     )
 
     return (
       <div>
-        <h1 style={{ textAlign: "center" }}>{this.state.projectName}</h1>
+        <h1 style={{ textAlign: "center" }}>{this.state.subjectName}</h1>
         <Timeline>{timelineEvents}</Timeline>
-        <Link to="/facts">See facts</Link>
+        <Link to="/debug/facts">See facts</Link>
       </div>
     )
   }
 }
 
-export default Feed
+export default withRouter(Feed)
