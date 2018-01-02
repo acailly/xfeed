@@ -4,6 +4,8 @@ import "./rules"
 //DEBUG
 window.search = v => store.searchFacts(v).then(r => console.log(r))
 
+//TODO ACY Mettre ca dans une fichier texte
+
 export default () => {
   return Promise.all([
     //TYPES - DEBUT DE CONTRAT

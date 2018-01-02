@@ -1,40 +1,42 @@
 import { sum, pluck } from "ramda"
 import store from "../store"
 
-const whenPaieIsAdded$ = store
-  .watchFacts$([[["paieId"], "is", "paie"]])
-  .mergeAll()
-  .pluck("paieId")
-  .distinct()
+//Pour chacune des paies
+const paieIdArray$ = store.watchFacts$([[["paieId"], "is", "paie"]])
+paieIdArray$
+  .switchMap(paieIds => {
+    return paieIds.map(({ paieId }) => {
+      //On récupère le montant de toutes les cotisations
+      const cotisations$ = store.watchFacts$([
+        ["paie", "cotisation", ["cotisationId"]],
+        [paieId, ["cotisationId"], ["cotisationAmount"]]
+      ])
 
-whenPaieIsAdded$.subscribe(
-  paieId => {
-    const cotisations$ = store.watchFacts$([
-      ["paie", "cotisation", ["cotisationId"]],
-      [paieId, ["cotisationId"], ["cotisationAmount"]]
-    ])
+      return (
+        cotisations$
+          //et on calcule le montant total des cotisations
+          .do(async cotisations => {
+            const totalCotisationAmount = sum(
+              pluck("cotisationAmount")(cotisations)
+            )
 
-    cotisations$.subscribe(
-      async cotisations => {
-        const totalCotisationAmount = sum(
-          pluck("cotisationAmount")(cotisations)
-        )
-
-        await store.addSingleFact(
-          [paieId, "totalCotisationAmount", totalCotisationAmount],
-          false
-        )
-        await store.addSingleFact(
-          [
-            paieId,
-            "totalCotisationAmountFormatted",
-            totalCotisationAmount.toFixed(2)
-          ],
-          true
-        )
-      },
-      err => console.error(err)
-    )
-  },
-  err => console.error(err)
-)
+            await store.addSingleFact(
+              [paieId, "totalCotisationAmount", totalCotisationAmount],
+              false
+            )
+            await store.addSingleFact(
+              [
+                paieId,
+                "totalCotisationAmountFormatted",
+                totalCotisationAmount.toFixed(2)
+              ],
+              true
+            )
+          })
+          .catch(err => console.error(err))
+          .subscribe()
+      )
+    })
+  })
+  .catch(err => console.error(err))
+  .subscribe()
