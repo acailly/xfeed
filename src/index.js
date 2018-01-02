@@ -8,6 +8,7 @@ import {
 } from "react-router-dom"
 import "./index.css"
 import "./startup"
+import "./rules"
 import registerServiceWorker from "./registerServiceWorker"
 import App from "./components/App"
 import Facts from "./components/Facts"
