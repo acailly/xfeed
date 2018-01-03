@@ -1,4 +1,5 @@
 import React, { PureComponent } from "react"
+import ReactModal from "react-modal"
 import { identity } from "ramda"
 import store from "../store"
 
@@ -37,7 +38,7 @@ class F extends PureComponent {
     this.setState({ editingValue: event.target.value })
   }
 
-  handleSubmit = event => {
+  handleValidateEdition = event => {
     event.preventDefault()
 
     const { s, p } = this.props
@@ -64,23 +65,19 @@ class F extends PureComponent {
     )
   }
 
+  handleCancelEdition = () => {
+    this.setState({
+      hover: false,
+      editing: false,
+      editingValue: undefined
+    })
+  }
+
   render() {
     const { editable } = this.props
     const { o, hover, editing } = this.state
 
-    const label = o || "Error"
-
-    //TODO Mettre l'édition dans une popup
-    const editingForm = (
-      <form onSubmit={this.handleSubmit}>
-        <input
-          type="text"
-          value={this.state.value}
-          onChange={this.handleChange}
-        />
-        <input type="submit" style={{ display: "none" }} />
-      </form>
-    )
+    const label = o || "Error" //TODO ACY Au lieu d'error, afficher un cadre orange avec '?' à l'intérieur
 
     const backgroundColor =
       hover && editable && !editing ? "rgb(32, 156, 238)" : undefined
@@ -115,7 +112,35 @@ class F extends PureComponent {
         onClick={handleClick}
       >
         {!editing && label}
-        {editing && editingForm}
+        <ReactModal
+          isOpen={editing}
+          style={{
+            content: {
+              position: "fixed",
+              top: undefined,
+              left: 0,
+              right: 0,
+              bottom: 0,
+              height: 30,
+              borderRadius: 0,
+              display: "flex",
+              flexDirection: "row",
+              justifyContent: "center",
+              alignItems: "center"
+            }
+          }}
+        >
+          <form onSubmit={this.handleValidateEdition}>
+            <input
+              type="text"
+              value={this.state.value}
+              onChange={this.handleChange}
+            />
+            <input type="submit" style={{ display: "none" }} />
+          </form>
+          <button onClick={this.handleValidateEdition}>Validate</button>
+          <button onClick={this.handleCancelEdition}>Cancel</button>
+        </ReactModal>
       </span>
     )
   }

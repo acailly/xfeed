@@ -1,5 +1,6 @@
 import React from "react"
 import ReactDOM from "react-dom"
+import ReactModal from "react-modal"
 import {
   BrowserRouter as Router,
   Route,
@@ -13,6 +14,8 @@ import registerServiceWorker from "./registerServiceWorker"
 import App from "./components/App"
 import Facts from "./components/Facts"
 import addInitialFacts from "./addInitialFacts"
+
+ReactModal.setAppElement("#root")
 
 addInitialFacts().then(() => {
   ReactDOM.render(

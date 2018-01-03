@@ -22,6 +22,9 @@ class Content extends PureComponent {
       this.subscription.unsubscribe()
     }
 
+    //TODO ACY au lieu d'explicitement indiquer quel composant utiliser pour le rendu,
+    //préciser simplement le type et ensuite aller chercher dans src/render/<type>/index.js ?
+    //Un peu comme Next.js ? https://learnnextjs.com
     this.subscription = store
       .watchSingleFact$([
         [selected, "is", ["type"]],
