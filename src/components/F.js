@@ -77,7 +77,7 @@ class F extends PureComponent {
     const { editable } = this.props
     const { o, hover, editing } = this.state
 
-    const label = o || "Error" //TODO ACY Au lieu d'error, afficher un cadre orange avec '?' à l'intérieur
+    const label = o || <b>?</b>
 
     const backgroundColor =
       hover && editable && !editing ? "rgb(32, 156, 238)" : undefined
@@ -107,11 +107,12 @@ class F extends PureComponent {
               }
             : {}
         }
+        title={editable ? "Click to edit" : ""}
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
         onClick={handleClick}
       >
-        {!editing && label}
+        {label}
         <ReactModal
           isOpen={editing}
           style={{
