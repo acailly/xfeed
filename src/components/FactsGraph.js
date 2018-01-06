@@ -8,7 +8,7 @@ cytoscape.use(cycola)
 
 //TODO ACY Faire un autre composant affichant tous les faits sous forme textuelle
 
-class Facts extends Component {
+class FactsGraph extends Component {
   componentDidMount = () => {
     store.watchAll$([[["subject"], ["predicate"], ["object"]]]).subscribe(
       results => {
@@ -120,4 +120,4 @@ class Facts extends Component {
   }
 }
 
-export default Facts
+export default FactsGraph
