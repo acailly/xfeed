@@ -9,17 +9,12 @@ class F extends PureComponent {
   componentDidMount = () => {
     const { s, p } = this.props
 
-    store
-      .watchSingleFact$([[s, p, ["o"]]])
-      .filter(identity)
-      .subscribe(
-        fact => {
-          this.setState({
-            o: fact.o
-          })
-        },
-        err => console.error(err)
-      )
+    store.watchEach$([[s, p, ["o"]]]).subscribe(
+      ({ o }) => {
+        this.setState({ o })
+      },
+      err => console.error(err)
+    )
   }
 
   handleMouseEnter = () => {

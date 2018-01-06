@@ -26,11 +26,7 @@ class Content extends PureComponent {
     //préciser simplement le type et ensuite aller chercher dans src/render/<type>/index.js ?
     //Un peu comme Next.js ? https://learnnextjs.com
     this.subscription = store
-      .watchSingleFact$([
-        [selected, "is", ["type"]],
-        [["type"], "render", ["page"]]
-      ])
-      .filter(identity)
+      .watchEach$([[selected, "is", ["type"]], [["type"], "render", ["page"]]])
       .subscribe(
         async ({ page }) => {
           const contentFile = await import("../pages/" + page)

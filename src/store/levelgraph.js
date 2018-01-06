@@ -16,7 +16,7 @@ const db = levelgraph(innerdb, options)
 
 const toLevelGraphValue = cond([[is(Array), v => db.v(v[0])], [T, v => v]])
 
-export const searchFacts = queries => {
+export const search = queries => {
   const levelgraphQueries = queries.map(([s, p, o]) => {
     const subject = toLevelGraphValue(s)
     const predicate = toLevelGraphValue(p)
@@ -33,24 +33,8 @@ export const searchFacts = queries => {
   })
 }
 
-export const searchFacts$ = function() {
-  return Observable.from(searchFacts(...arguments))
-}
-
-export const searchSingleFact = queries => {
-  return searchFacts(queries).then(results => {
-    if (results.length > 1)
-      console.warn(
-        "Expected single fact but have multiple facts for queries",
-        queries,
-        results
-      )
-    return head(results)
-  })
-}
-
-export const searchSingleFact$ = function() {
-  return Observable.from(searchSingleFact(...arguments))
+export const search$ = function() {
+  return Observable.from(search(...arguments))
 }
 
 const store$ = new Subject()
@@ -78,7 +62,7 @@ export const addFact$ = function() {
 }
 
 export const setFact = ([subject, predicate, object], notify = true) => {
-  return searchFacts([[subject, predicate, ["someObject"]]]).then(results => {
+  return search([[subject, predicate, ["someObject"]]]).then(results => {
     const factsToRemove = results.map(({ someObject }) => [
       subject,
       predicate,
@@ -92,23 +76,24 @@ export const setFact$ = function() {
   return Observable.from(setFact(...arguments))
 }
 
-export const watchFacts$ = query => {
+export const watchAll$ = query => {
   return store$
     .startWith(true)
     .concatMap(() => {
-      return searchFacts$(query)
+      return search$(query)
     })
     .distinctUntilChanged((a, b) => {
       return equals(a, b)
     })
 }
 
-export const watchSingleFact$ = query => {
+export const watchEach$ = query => {
   return store$
     .startWith(true)
     .concatMap(() => {
-      return searchSingleFact$(query)
+      return search$(query)
     })
+    .mergeAll()
     .distinctUntilChanged((a, b) => {
       return equals(a, b)
     })

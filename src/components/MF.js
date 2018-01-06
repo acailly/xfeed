@@ -15,11 +15,11 @@ class MF extends PureComponent {
     const { s, p } = this.props
 
     store
-      .watchFacts$([[s, p, ["o"]]])
+      .watchAll$([[s, p, ["o"]]])
       .filter(complement(isEmpty))
       .subscribe(
-        facts => {
-          const objects = pluck("o")(facts)
+        results => {
+          const objects = pluck("o")(results)
           this.setState({
             objects
           })

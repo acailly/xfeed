@@ -8,11 +8,11 @@ cytoscape.use(cycola)
 
 class Facts extends Component {
   componentDidMount = () => {
-    store.watchFacts$([[["subject"], ["predicate"], ["object"]]]).subscribe(
-      facts => {
+    store.watchAll$([[["subject"], ["predicate"], ["object"]]]).subscribe(
+      results => {
         // console.log("FACTS", JSON.stringify(facts)) //DEBUG
 
-        const subjects = uniq(pluck("subject")(facts))
+        const subjects = uniq(pluck("subject")(results))
 
         const subjectNodes = subjects.map(subject => {
           return {
@@ -21,7 +21,7 @@ class Facts extends Component {
         })
 
         const edges = flatten(
-          facts.map(({ subject, predicate, object }) => {
+          results.map(({ subject, predicate, object }) => {
             const result = []
 
             let objectNodeId = object

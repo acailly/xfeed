@@ -16,12 +16,11 @@ class Feed extends PureComponent {
     const { subject } = this.props
 
     const fetchSubjectName = store
-      .watchSingleFact$([[subject, "name", ["subjectName"]]])
-      .filter(identity)
+      .watchEach$([[subject, "name", ["subjectName"]]])
       .pluck("subjectName")
 
     const fetchTimelineEvents = store
-      .watchFacts$([
+      .watchAll$([
         [subject, "contains", ["itemId"]],
         [["itemId"], "name", ["itemName"]],
         [["itemId"], "created", ["itemCreationDate"]],
