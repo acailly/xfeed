@@ -84,7 +84,7 @@ export const addSingleFact = ([subject, predicate, object], notify = true) => {
       predicate,
       someObject
     ])
-    return transaction([[subject, predicate, object]], factsToRemove, notify)
+    return update([[subject, predicate, object]], factsToRemove, notify)
   })
 }
 
@@ -132,7 +132,7 @@ export const deleteFact$ = function() {
   return Observable.from(deleteFact(...arguments))
 }
 
-export const transaction = (factsToAdd, factsToDelete, notify = true) => {
+export const update = (factsToAdd, factsToDelete, notify = true) => {
   const batches = flatten([
     factsToDelete.map(([subject, predicate, object]) => {
       return db.generateBatch({ subject, predicate, object }, "del")
@@ -154,6 +154,6 @@ export const transaction = (factsToAdd, factsToDelete, notify = true) => {
   })
 }
 
-export const transaction$ = function() {
-  return Observable.from(transaction(...arguments))
+export const update$ = function() {
+  return Observable.from(update(...arguments))
 }

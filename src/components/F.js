@@ -52,7 +52,7 @@ class F extends PureComponent {
 
     const factsToAdd = [[s, p, editingValue]]
 
-    store.transaction$(factsToAdd, factsToRemove).subscribe(
+    store.update$(factsToAdd, factsToRemove).subscribe(
       () => {
         this.setState({
           hover: false,
