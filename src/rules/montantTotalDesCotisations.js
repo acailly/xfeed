@@ -3,8 +3,8 @@ import store from "../store"
 
 store
   .watchAll$([
-    [["paieId"], "is", "paie"],
-    ["paie", "cotisation", ["cotisationId"]],
+    [["paieId"], "est", "une paie"],
+    ["une paie", "est sujette à", ["cotisationId"]],
     [["paieId"], ["cotisationId"], ["cotisationAmount"]]
   ])
   .do(cotisations => {
@@ -13,10 +13,14 @@ store
       mapObjIndexed(pipe(pluck("cotisationAmount"), sum)), // total cotisation amount by paieId
       mapObjIndexed((totalCotisationAmount, paieId) => {
         store.setFacts([
-          [paieId, "totalCotisationAmount", totalCotisationAmount],
           [
             paieId,
-            "totalCotisationAmountFormatted",
+            "est sujette à un total de cotisation de",
+            totalCotisationAmount
+          ],
+          [
+            paieId,
+            "est sujette à un total de cotisation de (formatté)",
             totalCotisationAmount.toFixed(2)
           ]
         ])

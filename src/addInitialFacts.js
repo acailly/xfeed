@@ -2,84 +2,100 @@ import store from "./store"
 
 const initialFacts = [
   //TYPES - DEBUT DE CONTRAT
-  ["debutContrat", "icon", "fiber_new"],
+  ["un début de contrat", "a pour icône", "fiber_new"],
 
   //TYPES - PAIE
-  ["paie", "render", "PaieWidget.md"],
-  ["paie", "icon", "monetization_on"],
+  ["une paie", "s'affiche avec", "PaieWidget.md"],
+  ["une paie", "a pour icône", "monetization_on"],
 
   //TYPES - PAIE - COTISATIONS
-  ["paie", "cotisation", "vieillesseMaladie"],
-  ["vieillesseMaladie", "name", "SECURITE SOCIALE - Vieillesse et maladie"],
-  ["vieillesseMaladie", "base", 100],
-  ["vieillesseMaladie", "rate", 8.05],
-
-  ["paie", "cotisation", "retraiteComplementaire"],
-  ["retraiteComplementaire", "name", "IRCEM RETRAITE COMPLEMENTAIRE"],
-  ["retraiteComplementaire", "base", 100],
-  ["retraiteComplementaire", "rate", 3.1],
-
-  ["paie", "cotisation", "chomage"],
-  ["chomage", "name", "CHOMAGE"],
-  ["chomage", "base", 100],
-  ["chomage", "rate", 2.4],
-
-  ["paie", "cotisation", "prevoyanceAGFF"],
-  ["prevoyanceAGFF", "name", "IRCEM PREVOYANCE  + AGFF (0,8%)"],
-  ["prevoyanceAGFF", "base", 100],
-  ["prevoyanceAGFF", "rate", 1.95],
-
-  ["paie", "cotisation", "csgDeductible"],
-  ["csgDeductible", "name", "CSG DEDUCTIBLE"],
-  ["csgDeductible", "base", 98.25],
-  ["csgDeductible", "rate", 5.1],
-
-  ["paie", "cotisation", "csgRdsNonDeductible"],
+  ["une paie", "est sujette à", "la cotisation vieillesse maladie"],
   [
-    "csgRdsNonDeductible",
-    "name",
+    "la cotisation vieillesse maladie",
+    "a pour nom",
+    "SECURITE SOCIALE - Vieillesse et maladie"
+  ],
+  ["la cotisation vieillesse maladie", "a pour base", 100],
+  ["la cotisation vieillesse maladie", "a pour taux", 8.05],
+
+  ["une paie", "est sujette à", "la cotisation retraite complementaire"],
+  [
+    "la cotisation retraite complementaire",
+    "a pour nom",
+    "IRCEM RETRAITE COMPLEMENTAIRE"
+  ],
+  ["la cotisation retraite complementaire", "a pour base", 100],
+  ["la cotisation retraite complementaire", "a pour taux", 3.1],
+
+  ["une paie", "est sujette à", "la cotisation chomage"],
+  ["la cotisation chomage", "a pour nom", "CHOMAGE"],
+  ["la cotisation chomage", "a pour base", 100],
+  ["la cotisation chomage", "a pour taux", 2.4],
+
+  ["une paie", "est sujette à", "la cotisation prevoyance AGFF"],
+  [
+    "la cotisation prevoyance AGFF",
+    "a pour nom",
+    "IRCEM PREVOYANCE  + AGFF (0,8%)"
+  ],
+  ["la cotisation prevoyance AGFF", "a pour base", 100],
+  ["la cotisation prevoyance AGFF", "a pour taux", 1.95],
+
+  ["une paie", "est sujette à", "la cotisation CSG déductible"],
+  ["la cotisation CSG déductible", "a pour nom", "CSG DEDUCTIBLE"],
+  ["la cotisation CSG déductible", "a pour base", 98.25],
+  ["la cotisation CSG déductible", "a pour taux", 5.1],
+
+  ["une paie", "est sujette à", "la cotisation CSG+RDS non déductible"],
+  [
+    "la cotisation CSG+RDS non déductible",
+    "a pour nom",
     "CSG + RDS PART NON DEDUCTIBLE (2,4% et 0,50%)"
   ],
-  ["csgRdsNonDeductible", "base", 98.25],
-  ["csgRdsNonDeductible", "rate", 2.9],
+  ["la cotisation CSG+RDS non déductible", "a pour base", 98.25],
+  ["la cotisation CSG+RDS non déductible", "a pour taux", 2.9],
 
   //PROJET ASSISTANTE MATERNELLE
-  ["projetAssMat", "is", "project"],
-  ["projetAssMat", "name", "Assistante maternelle"],
+  ["le projet assistante maternelle", "est", "un projet"],
+  ["le projet assistante maternelle", "a pour nom", "Assistante maternelle"],
 
   //PROJET ASSISTANTE MATERNELLE - DEBUT DE CONTRAT
-  ["projetAssMat", "contains", "debutContrat"],
-  ["debutContrat", "is", "debutContrat"],
-  ["debutContrat", "name", "Début du contrat"],
-  ["debutContrat", "created", "20171001"],
-  ["debutContrat", "createdFormatted", "01/10/2017"],
+  ["le projet assistante maternelle", "contient", "le début de contrat"],
+  ["le début de contrat", "est", "un début de contrat"],
+  ["le début de contrat", "a pour nom", "Début du contrat"],
+  ["le début de contrat", "a pour date de création", "20171001"],
+  ["le début de contrat", "a pour date de création (formatté)", "01/10/2017"],
 
   //PROJET ASSISTANTE MATERNELLE - PAIE OCTOBRE
-  ["projetAssMat", "contains", "paieOctobre"],
-  ["paieOctobre", "is", "paie"],
-  ["paieOctobre", "name", `Paie d'Octobre`],
-  ["paieOctobre", "created", "20171101"],
-  ["paieOctobre", "createdFormatted", "01/11/2017"],
-  ["paieOctobre", "workingHours", 115],
-  ["paieOctobre", "workingDays", 16],
-  ["paieOctobre", "hourlyGrossRate", 3.77],
+  ["le projet assistante maternelle", "contient", "la paie d'octobre"],
+  ["la paie d'octobre", "est", "une paie"],
+  ["la paie d'octobre", "a pour nom", "Paie d'Octobre"],
+  ["la paie d'octobre", "a pour date de création", "20171101"],
+  ["la paie d'octobre", "a pour date de création (formatté)", "01/11/2017"],
+  ["la paie d'octobre", "a pour nombre d'heures travaillées", 115],
+  ["la paie d'octobre", "a pour nombre de jours travaillés", 16],
+  ["la paie d'octobre", "a pour taux horaire brut", 3.77],
 
   //PROJET ASSISTANTE MATERNELLE - PAIE NOVEMBRE
-  ["projetAssMat", "contains", "paieNovembre"],
-  ["paieNovembre", "is", "paie"],
-  ["paieNovembre", "name", `Paie de Novembre`],
-  ["paieNovembre", "created", "20171201"],
-  ["paieNovembre", "createdFormatted", "01/12/2017"],
+  ["le projet assistante maternelle", "contient", "la paie de novembre"],
+  ["la paie de novembre", "est", "une paie"],
+  ["la paie de novembre", "a pour nom", "Paie de Novembre"],
+  ["la paie de novembre", "a pour date de création", "20171201"],
+  ["la paie de novembre", "a pour date de création (formatté)", "01/12/2017"],
 
   //PROJET ASSISTANTE MATERNELLE - PAIE DECEMBRE
-  ["projetAssMat", "contains", "paieDecembre"],
-  ["paieDecembre", "is", "paie"],
-  ["paieDecembre", "name", `Paie de Décembre`],
-  ["paieDecembre", "created", "20180101"],
-  ["paieDecembre", "createdFormatted", "01/01/2018"],
+  ["le projet assistante maternelle", "contient", "la paie de décembre"],
+  ["la paie de décembre", "est", "une paie"],
+  ["la paie de décembre", "a pour nom", "Paie de Décembre"],
+  ["la paie de décembre", "a pour date de création", "20180101"],
+  ["la paie de décembre", "a pour date de création (formatté)", "01/01/2018"],
 
   //SELECTION
-  ["projetAssMat", "selection", "paieOctobre"]
+  [
+    "le projet assistante maternelle",
+    "a pour élément sélectionné",
+    "la paie d'octobre"
+  ]
 ]
 
 export default () =>

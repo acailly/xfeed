@@ -21,7 +21,11 @@ addInitialFacts().then(() => {
   ReactDOM.render(
     <Router>
       <Switch>
-        <Redirect exact from="/" to="/projetAssMat/paieOctobre" />
+        <Redirect
+          exact
+          from="/"
+          to="/le projet assistante maternelle/la paie d'octobre"
+        />
         <Route path="/:subject/:selected" component={App} />
         <Route path="/debug/facts" component={Facts} />
       </Switch>

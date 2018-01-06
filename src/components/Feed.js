@@ -16,17 +16,21 @@ class Feed extends PureComponent {
     const { subject } = this.props
 
     const fetchSubjectName = store
-      .watchEach$([[subject, "name", ["subjectName"]]])
+      .watchEach$([[subject, "a pour nom", ["subjectName"]]])
       .pluck("subjectName")
 
     const fetchTimelineEvents = store
       .watchAll$([
-        [subject, "contains", ["itemId"]],
-        [["itemId"], "name", ["itemName"]],
-        [["itemId"], "created", ["itemCreationDate"]],
-        [["itemId"], "createdFormatted", ["itemCreationDateFormatted"]],
-        [["itemId"], "is", ["itemType"]],
-        [["itemType"], "icon", ["itemIcon"]]
+        [subject, "contient", ["itemId"]],
+        [["itemId"], "a pour nom", ["itemName"]],
+        [["itemId"], "a pour date de création", ["itemCreationDate"]],
+        [
+          ["itemId"],
+          "a pour date de création (formatté)",
+          ["itemCreationDateFormatted"]
+        ],
+        [["itemId"], "est", ["itemType"]],
+        [["itemType"], "a pour icône", ["itemIcon"]]
       ])
       .map(sortBy(prop("itemCreationDate")))
 

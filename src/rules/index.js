@@ -1,4 +1,4 @@
-import "./computeGrossSalary"
-import "./computeCotisationAmounts"
-import "./computeTotalCotisationAmount"
-import "./computeNetSalary"
+import "./salaireBrut"
+import "./montantDesCotisations"
+import "./montantTotalDesCotisations"
+import "./salaireNet"
