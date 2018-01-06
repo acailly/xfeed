@@ -2,19 +2,19 @@ import store from "../store"
 
 store
   .watchEach$([
-    [["paieId"], "est", "une paie"],
-    [["paieId"], "a pour salaire brut", ["grossSalary"]],
+    [["laPaie"], "est", "une paie"],
+    [["laPaie"], "a pour salaire brut", ["salaireBrut"]],
     [
-      ["paieId"],
+      ["laPaie"],
       "est sujette à un total de cotisation de",
-      ["totalCotisationAmount"]
+      ["montantTotalDesCotisations"]
     ]
   ])
-  .do(({ paieId, grossSalary, totalCotisationAmount }) => {
-    const netSalary = grossSalary - totalCotisationAmount
+  .do(({ laPaie, salaireBrut, montantTotalDesCotisations }) => {
+    const salaireNet = salaireBrut - montantTotalDesCotisations
     store.setFacts([
-      [paieId, "a pour salaire net", netSalary],
-      [paieId, "a pour salaire net (formatté)", netSalary.toFixed(2)]
+      [laPaie, "a pour salaire net", salaireNet],
+      [laPaie, "a pour salaire net (formatté)", salaireNet.toFixed(2)]
     ])
   })
   .catch(err => console.error(err))

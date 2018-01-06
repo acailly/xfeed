@@ -2,27 +2,27 @@ import store from "../store"
 
 store
   .watchEach$([
-    [["paieId"], "est", "une paie"],
-    ["une paie", "est sujette à", ["cotisationId"]],
-    [["cotisationId"], "a pour nom", ["cotisationName"]],
-    [["cotisationId"], "a pour base", ["cotisationBase"]],
-    [["cotisationId"], "a pour taux", ["cotisationRate"]],
-    [["paieId"], "a pour salaire brut", ["grossSalary"]]
+    [["laPaie"], "est", "une paie"],
+    ["une paie", "est sujette à", ["laCotisation"]],
+    [["laCotisation"], "a pour nom", ["nomDeLaCotisation"]],
+    [["laCotisation"], "a pour base", ["baseDeLaCotisation"]],
+    [["laCotisation"], "a pour taux", ["tauxDeLaCotisation"]],
+    [["laPaie"], "a pour salaire brut", ["salaireBrut"]]
   ])
   .do(
     ({
-      paieId,
-      grossSalary,
-      cotisationId,
-      cotisationName,
-      cotisationBase,
-      cotisationRate
+      laPaie,
+      salaireBrut,
+      laCotisation,
+      nomDeLaCotisation,
+      baseDeLaCotisation,
+      tauxDeLaCotisation
     }) => {
-      const amount =
-        grossSalary * (cotisationBase / 100.0) * (cotisationRate / 100)
+      const montantDeLaCotisation =
+        salaireBrut * (baseDeLaCotisation / 100.0) * (tauxDeLaCotisation / 100)
       store.setFacts([
-        [paieId, cotisationId, amount],
-        [paieId, cotisationId + " (formatté)", amount.toFixed(2)]
+        [laPaie, laCotisation, montantDeLaCotisation],
+        [laPaie, laCotisation + " (formatté)", montantDeLaCotisation.toFixed(2)]
       ])
     }
   )

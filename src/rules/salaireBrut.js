@@ -2,15 +2,15 @@ import store from "../store"
 
 store
   .watchEach$([
-    [["paieId"], "est", "une paie"],
-    [["paieId"], "a pour nombre d'heures travaillées", ["workingHours"]],
-    [["paieId"], "a pour taux horaire brut", ["hourlyGrossRate"]]
+    [["laPaie"], "est", "une paie"],
+    [["laPaie"], "a pour nombre d'heures travaillées", ["heuresTravaillees"]],
+    [["laPaie"], "a pour taux horaire brut", ["tauxHoraireBrut"]]
   ])
-  .do(({ paieId, workingHours, hourlyGrossRate }) => {
-    const grossSalary = workingHours * hourlyGrossRate
+  .do(({ laPaie, heuresTravaillees, tauxHoraireBrut }) => {
+    const salaireBrut = heuresTravaillees * tauxHoraireBrut
     store.setFacts([
-      [paieId, "a pour salaire brut", grossSalary],
-      [paieId, "a pour salaire brut (formatté)", grossSalary.toFixed(2)]
+      [laPaie, "a pour salaire brut", salaireBrut],
+      [laPaie, "a pour salaire brut (formatté)", salaireBrut.toFixed(2)]
     ])
   })
   .catch(err => console.error(err))

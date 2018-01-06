@@ -1,3 +1,6 @@
+//TODO ACY Upgrader RxJs pour les lettable operators
+//https://github.com/ReactiveX/rxjs/blob/master/doc/lettable-operators.md
+
 import "rxjs/add/observable/from"
 import "rxjs/add/observable/of"
 import "rxjs/add/observable/empty"

@@ -1,5 +1,7 @@
 import store from "./store"
 
+//TODO ACY Essayer de parser du vrai texte sans les [] et les ,
+
 const initialFacts = [
   //TYPES - DEBUT DE CONTRAT
   ["un début de contrat", "a pour icône", "fiber_new"],
