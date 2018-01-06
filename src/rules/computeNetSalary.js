@@ -19,8 +19,8 @@ paieIdArray$
           .do(async ({ grossSalary, totalCotisationAmount }) => {
             const netSalary = grossSalary - totalCotisationAmount
 
-            await store.addSingleFact([paieId, "netSalary", netSalary], false)
-            await store.addSingleFact(
+            await store.setFact([paieId, "netSalary", netSalary], false)
+            await store.setFact(
               [paieId, "netSalaryFormatted", netSalary.toFixed(2)],
               true
             )

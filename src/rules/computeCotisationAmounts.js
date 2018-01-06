@@ -29,7 +29,7 @@ paieIdArray$
             }) => {
               const amount =
                 grossSalary * (cotisationBase / 100.0) * (cotisationRate / 100)
-              store.addSingleFact([paieId, cotisationId, amount])
+              store.setFact([paieId, cotisationId, amount])
             }
           )
           .catch(err => console.error(err))

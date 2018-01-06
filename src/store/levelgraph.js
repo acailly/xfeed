@@ -77,7 +77,7 @@ export const addFact$ = function() {
   return Observable.from(addFact(...arguments))
 }
 
-export const addSingleFact = ([subject, predicate, object], notify = true) => {
+export const setFact = ([subject, predicate, object], notify = true) => {
   return searchFacts([[subject, predicate, ["someObject"]]]).then(results => {
     const factsToRemove = results.map(({ someObject }) => [
       subject,
@@ -88,8 +88,8 @@ export const addSingleFact = ([subject, predicate, object], notify = true) => {
   })
 }
 
-export const addSingleFact$ = function() {
-  return Observable.from(addSingleFact(...arguments))
+export const setFact$ = function() {
+  return Observable.from(setFact(...arguments))
 }
 
 export const watchFacts$ = query => {

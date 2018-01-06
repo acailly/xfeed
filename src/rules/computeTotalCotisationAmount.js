@@ -20,11 +20,11 @@ paieIdArray$
               pluck("cotisationAmount")(cotisations)
             )
 
-            await store.addSingleFact(
+            await store.setFact(
               [paieId, "totalCotisationAmount", totalCotisationAmount],
               false
             )
-            await store.addSingleFact(
+            await store.setFact(
               [
                 paieId,
                 "totalCotisationAmountFormatted",

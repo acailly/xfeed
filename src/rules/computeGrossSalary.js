@@ -18,7 +18,7 @@ paieIdArray$
           //et on calcule le salaire brut : nombre d'heures x taux horaire brut
           .do(({ workingHours, hourlyGrossRate }) => {
             const grossSalary = workingHours * hourlyGrossRate
-            store.addSingleFact([paieId, "grossSalary", grossSalary])
+            store.setFact([paieId, "grossSalary", grossSalary])
           })
           .catch(err => console.error(err))
           .subscribe()
