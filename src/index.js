@@ -12,6 +12,7 @@ import "./startup"
 import "./rules"
 import registerServiceWorker from "./registerServiceWorker"
 import App from "./components/App"
+import Facts from "./components/Facts"
 import FactsGraph from "./components/FactsGraph"
 import addInitialFacts from "./addInitialFacts"
 
@@ -26,6 +27,7 @@ addInitialFacts().then(() => {
           from="/"
           to="/le projet assistante maternelle/la paie d'octobre"
         />
+        <Route path="/debug/facts" component={Facts} />
         <Route path="/debug/graph" component={FactsGraph} />
         <Route path="/:subject/:selected" component={App} />
       </Switch>

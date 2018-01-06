@@ -72,7 +72,7 @@ class Feed extends PureComponent {
       <div>
         <h1 style={{ textAlign: "center" }}>{this.state.subjectName}</h1>
         <Timeline>{timelineEvents}</Timeline>
-        <Link to="/debug/graph">See facts</Link>
+        <Link to="/debug/facts">See facts</Link>
       </div>
     )
   }
