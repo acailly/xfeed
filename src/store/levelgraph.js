@@ -1,6 +1,6 @@
 //https://github.com/levelgraph/levelgraph
 
-import { is, cond, T, equals, flatten, head } from "ramda"
+import { is, cond, T, equals, flatten, unnest } from "ramda"
 import memdb from "memdb"
 import levelgraph from "levelgraph"
 import { Observable } from "rxjs/Observable"
@@ -72,6 +72,26 @@ export const setFact = ([subject, predicate, object], notify = true) => {
   })
 }
 
+export const setFacts = (factsToAdd, notify = true) => {
+  const getFactsToRemoveForEachFact = factsToAdd.map(
+    ([subject, predicate, object]) => {
+      return search([[subject, predicate, ["someObject"]]]).then(results => {
+        const factsToRemove = results.map(({ someObject }) => [
+          subject,
+          predicate,
+          someObject
+        ])
+        return factsToRemove
+      })
+    }
+  )
+  return Promise.all(getFactsToRemoveForEachFact)
+    .then(unnest)
+    .then(factsToRemove => {
+      return update(factsToAdd, factsToRemove, notify)
+    })
+}
+
 export const setFact$ = function() {
   return Observable.from(setFact(...arguments))
 }
@@ -93,10 +113,10 @@ export const watchEach$ = query => {
     .concatMap(() => {
       return search$(query)
     })
-    .mergeAll()
     .distinctUntilChanged((a, b) => {
       return equals(a, b)
     })
+    .mergeAll()
 }
 
 export const deleteFact = ([subject, predicate, object], notify = true) => {

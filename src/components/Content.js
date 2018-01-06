@@ -1,5 +1,4 @@
 import React, { PureComponent, Fragment } from "react"
-import { identity } from "ramda"
 import LoadMarkdown from "./LoadMarkdown"
 import store from "../store"
 

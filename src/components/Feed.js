@@ -1,6 +1,6 @@
 import React, { PureComponent } from "react"
 import { Timeline, TimelineEvent } from "react-event-timeline"
-import { sortBy, prop, identity } from "ramda"
+import { sortBy, prop } from "ramda"
 import { Observable } from "rxjs/Observable"
 import { Link } from "react-router-dom"
 import { withRouter } from "react-router"

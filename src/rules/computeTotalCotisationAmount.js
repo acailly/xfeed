@@ -1,42 +1,27 @@
-import { sum, pluck } from "ramda"
+import { pipe, mapObjIndexed, sum, groupBy, pluck, prop } from "ramda"
 import store from "../store"
 
-//Pour chacune des paies
-const paieIdArray$ = store.watchAll$([[["paieId"], "is", "paie"]])
-paieIdArray$
-  .switchMap(paieIds => {
-    return paieIds.map(({ paieId }) => {
-      //On récupère le montant de toutes les cotisations
-      const cotisations$ = store.watchAll$([
-        ["paie", "cotisation", ["cotisationId"]],
-        [paieId, ["cotisationId"], ["cotisationAmount"]]
-      ])
-
-      return (
-        cotisations$
-          //et on calcule le montant total des cotisations
-          .do(async cotisations => {
-            const totalCotisationAmount = sum(
-              pluck("cotisationAmount")(cotisations)
-            )
-
-            await store.setFact(
-              [paieId, "totalCotisationAmount", totalCotisationAmount],
-              false
-            )
-            await store.setFact(
-              [
-                paieId,
-                "totalCotisationAmountFormatted",
-                totalCotisationAmount.toFixed(2)
-              ],
-              true
-            )
-          })
-          .catch(err => console.error(err))
-          .subscribe()
-      )
-    })
+store
+  .watchAll$([
+    [["paieId"], "is", "paie"],
+    ["paie", "cotisation", ["cotisationId"]],
+    [["paieId"], ["cotisationId"], ["cotisationAmount"]]
+  ])
+  .do(cotisations => {
+    pipe(
+      groupBy(prop("paieId")), //cotisations by paieId
+      mapObjIndexed(pipe(pluck("cotisationAmount"), sum)), // total cotisation amount by paieId
+      mapObjIndexed((totalCotisationAmount, paieId) => {
+        store.setFacts([
+          [paieId, "totalCotisationAmount", totalCotisationAmount],
+          [
+            paieId,
+            "totalCotisationAmountFormatted",
+            totalCotisationAmount.toFixed(2)
+          ]
+        ])
+      })
+    )(cotisations)
   })
   .catch(err => console.error(err))
   .subscribe()

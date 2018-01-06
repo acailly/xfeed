@@ -1,6 +1,5 @@
 import React, { PureComponent } from "react"
 import ReactModal from "react-modal"
-import { identity } from "ramda"
 import store from "../store"
 
 class F extends PureComponent {
