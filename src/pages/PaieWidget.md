@@ -39,7 +39,11 @@ TODO ACY Regler le problème de regex avec MF (voir dans showdown-extensions.js)
 < /MF>
 ```
 
-Le salaire net imposable est donc égal à <F s="${rootSubject}" p="a pour salaire net (formatté)"></F>€ + <F s="${rootSubject}" p="a pour montant total des cotisations imposables (formatté)"></F>€ (somme des cotisations ci-dessus) = <F s="${rootSubject}" p="a pour salaire net imposable (formatté)"></F>€
+Le salaire net imposable est donc égal à <F s="${rootSubject}" p="a pour salaire net (formatté)"></F>€ + <F s="${rootSubject}" p="a pour montant total des cotisations imposables (formatté)"></F>€ (somme des cotisations ci-dessus) = **<F s="${rootSubject}" p="a pour salaire net imposable (formatté)"></F>€**
+
+## Salaire net à payer
+
+Le salaire net à payer est la somme du salaire net (<F s="${rootSubject}" p="a pour salaire net (formatté)"></F>€) et des indemnités d'entretien versées (<F s="${rootSubject}" p="a pour montant total d'indemnité d'entretien (formatté)"></F>€) = **<F s="${rootSubject}" p="a pour salaire net à payer (formatté)"></F>€**
 
 
 
