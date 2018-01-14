@@ -25,8 +25,21 @@ L'indemnité d'entretien est de <F s="${rootSubject}" p="a pour indemnité journ
 
 Le montant total des indemnités d'entretien à verser est de <F s="${rootSubject}" p="a pour indemnité journalière d'entretien"></F>€ x <F s="${rootSubject}" p="a pour nombre de jours travaillés"></F> jours = **<F s="${rootSubject}" p="a pour montant total d'indemnité d'entretien (formatté)"></F>€**
 
+## Salaire net imposable
 
+Le salaire net imposable est calculé en additionnant le salaire net et les cotisations imposables :
 
+```
+TODO ACY Regler le problème de regex avec MF (voir dans showdown-extensions.js)
+
+< MF s="une paie" p="est imposable sur" >
+
+- La cotisation **<F s="${o}" p="a pour nom"></F>** <F s="${rootSubject}" p="${o} (formatté)"></F>€
+
+< /MF>
+```
+
+Le salaire net imposable est donc égal à <F s="${rootSubject}" p="a pour salaire net (formatté)"></F>€ + <F s="${rootSubject}" p="a pour montant total des cotisations imposables (formatté)"></F>€ (somme des cotisations ci-dessus) = <F s="${rootSubject}" p="a pour salaire net imposable (formatté)"></F>€
 
 
 

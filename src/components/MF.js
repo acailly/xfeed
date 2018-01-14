@@ -6,7 +6,9 @@ import store from "../store"
 import F from "./F"
 
 //https://developer.mozilla.org/fr/docs/D%C3%A9coder_encoder_en_base64#Premi%C3%A8re_solution_%E2%80%93_%C3%A9chapper_la_cha%C3%AEne_avant_de_l'encoder
-const decodeFromBase64 = str => decodeURIComponent(escape(window.atob(str)))
+const decodeFromBase64 = str => {
+  return decodeURIComponent(escape(window.atob(str)))
+}
 
 class MF extends PureComponent {
   state = {}
@@ -32,11 +34,11 @@ class MF extends PureComponent {
     const { children } = this.props
     const { objects } = this.state
 
+    if (!children || !objects || isEmpty(objects)) return null
+
     const decodedChildren = decodeFromBase64(children)
       //https://github.com/showdownjs/showdown/wiki/extensions#gotchas
       .replace(/¨D/g, "$")
-
-    if (!objects || isEmpty(objects)) return null
 
     const aggregatedContent = join("\n")(
       objects.map(o => {

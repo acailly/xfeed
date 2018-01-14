@@ -49,6 +49,7 @@ const initialFacts = [
   ["la cotisation CSG déductible", "a pour taux", 5.1],
 
   ["une paie", "est sujette à", "la cotisation CSG+RDS non déductible"],
+  ["une paie", "est imposable sur", "la cotisation CSG+RDS non déductible"],
   [
     "la cotisation CSG+RDS non déductible",
     "a pour nom",

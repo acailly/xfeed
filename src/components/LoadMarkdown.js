@@ -4,6 +4,8 @@ import template from "es6-template-strings"
 import F from "./F"
 import MF from "./MF"
 
+//TODO ACY Gérer la génération automatique d'une table des matières https://github.com/ravisorg/showdown-toc
+
 class LoadMarkdown extends PureComponent {
   state = {}
 
