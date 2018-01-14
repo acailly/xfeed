@@ -77,6 +77,7 @@ const initialFacts = [
   ["la paie d'octobre", "a pour nombre d'heures travaillées", 115],
   ["la paie d'octobre", "a pour nombre de jours travaillés", 16],
   ["la paie d'octobre", "a pour taux horaire brut", 3.77],
+  ["la paie d'octobre", "a pour indemnité journalière d'entretien", 2.83],
 
   //PROJET ASSISTANTE MATERNELLE - PAIE NOVEMBRE
   ["le projet assistante maternelle", "contient", "la paie de novembre"],

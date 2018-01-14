@@ -19,6 +19,11 @@ Le taux horaire brut est de <F s="${rootSubject}" p="a pour taux horaire brut" e
 
 Le montant total des cotisations s'élève à <F s="${rootSubject}" p="est sujette à un total de cotisation de (formatté)"></F>€, ce qui donne un salaire net de <F s="${rootSubject}" p="a pour salaire brut"></F>€ - <F s="${rootSubject}" p="est sujette à un total de cotisation de (formatté)"></F>€ = **<F s="${rootSubject}" p="a pour salaire net (formatté)"></F>€**
 
+## Indemnités d'entretien
+
+L'indemnité d'entretien est de <F s="${rootSubject}" p="a pour indemnité journalière d'entretien" editable=true ></F>€ par jour
+
+Le montant total des indemnités d'entretien à verser est de <F s="${rootSubject}" p="a pour indemnité journalière d'entretien"></F>€ x <F s="${rootSubject}" p="a pour nombre de jours travaillés"></F> jours = **<F s="${rootSubject}" p="a pour montant total d'indemnité d'entretien (formatté)"></F>€**
 
 
 
