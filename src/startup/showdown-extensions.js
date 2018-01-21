@@ -7,7 +7,7 @@ var encodeMFContent = {
   type: "lang",
   filter: function(text, converter, options) {
     return text.replace(
-      /(<MF [^>]*>)([\s\S]*)(<\/MF>)/g,
+      /(<MF [^>]*>)([\s\S]*?)(<\/MF>)/g,
       (match, p1, p2, p3) => {
         return `${p1}${encodeInBase64(p2)}${p3}`
       }
