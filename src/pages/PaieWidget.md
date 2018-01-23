@@ -11,6 +11,10 @@ Le taux horaire brut est de <F s="${rootSubject}" p="a pour taux horaire brut" e
 
 ## Salaire net
 
+```
+TODO ACY Les bases et taux de cotisations ne sont plus accessibles à un simple F
+```
+
 <MF s="une paie" p="est sujette à"  >
 
 - La cotisation **<F s="${o}" p="a pour nom"></F>** s'applique sur <F s="${o}" p="a pour base"></F>% de <F s="${rootSubject}" p="a pour salaire brut"></F>€ avec un taux de <F s="${o}" p="a pour taux"></F>% : <F s="${rootSubject}" p="${o} (formatté)"></F>€

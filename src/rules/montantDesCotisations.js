@@ -3,10 +3,13 @@ import store from "../store"
 store
   .watchEach$([
     [["laPaie"], "est", "une paie"],
+    [["laPaie"], "couvre l'année", ["anneeDeLaPaie"]],
     ["une paie", "est sujette à", ["laCotisation"]],
     [["laCotisation"], "a pour nom", ["nomDeLaCotisation"]],
-    [["laCotisation"], "a pour base", ["baseDeLaCotisation"]],
-    [["laCotisation"], "a pour taux", ["tauxDeLaCotisation"]],
+    [["laCotisation"], "a pour base", ["baseDeLaCotisationParAnnee"]],
+    [["baseDeLaCotisationParAnnee"], ["anneeDeLaPaie"], ["baseDeLaCotisation"]],
+    [["laCotisation"], "a pour taux", ["tauxDeLaCotisationParAnnee"]],
+    [["tauxDeLaCotisationParAnnee"], ["anneeDeLaPaie"], ["tauxDeLaCotisation"]],
     [["laPaie"], "a pour salaire brut", ["salaireBrut"]]
   ])
   .do(

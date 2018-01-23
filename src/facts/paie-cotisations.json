@@ -1,0 +1,112 @@
+[
+  ["une paie", "est sujette à", "la cotisation vieillesse maladie"],
+  [
+    "la cotisation vieillesse maladie",
+    "a pour nom",
+    "SECURITE SOCIALE - Vieillesse et maladie"
+  ],
+  [
+    "la cotisation vieillesse maladie",
+    "a pour base",
+    "la base de la cotisation vieillesse maladie"
+  ],
+  ["la base de la cotisation vieillesse maladie", "2017", 100],
+  ["la base de la cotisation vieillesse maladie", "2018", 100],
+  [
+    "la cotisation vieillesse maladie",
+    "a pour taux",
+    "le taux de la cotisation vieillesse maladie"
+  ],
+  ["le taux de la cotisation vieillesse maladie", "2017", 8.05],
+  ["le taux de la cotisation vieillesse maladie", "2018", 8.05],
+
+  ["une paie", "est sujette à", "la cotisation retraite complementaire"],
+  [
+    "la cotisation retraite complementaire",
+    "a pour nom",
+    "IRCEM RETRAITE COMPLEMENTAIRE"
+  ],
+  [
+    "la cotisation retraite complementaire",
+    "a pour base",
+    "la base de la cotisation retraite complementaire"
+  ],
+  ["la base de la cotisation retraite complementaire", "2017", 100],
+  ["la base de la cotisation retraite complementaire", "2018", 100],
+  [
+    "la cotisation retraite complementaire",
+    "a pour taux",
+    "le taux de la cotisation retraite complementaire"
+  ],
+  ["le taux de la cotisation retraite complementaire", "2017", 3.1],
+  ["le taux de la cotisation retraite complementaire", "2018", 3.1],
+
+  ["une paie", "est sujette à", "la cotisation chomage"],
+  ["la cotisation chomage", "a pour nom", "CHOMAGE"],
+  ["la cotisation chomage", "a pour base", "la base de la cotisation chomage"],
+  ["la base de la cotisation chomage", "2017", 100],
+  ["la base de la cotisation chomage", "2018", 100],
+  ["la cotisation chomage", "a pour taux", "le taux de la cotisation chomage"],
+  ["le taux de la cotisation chomage", "2017", 2.4],
+  ["le taux de la cotisation chomage", "2018", 2.4],
+
+  ["une paie", "est sujette à", "la cotisation prevoyance AGFF"],
+  [
+    "la cotisation prevoyance AGFF",
+    "a pour nom",
+    "IRCEM PREVOYANCE  + AGFF (0,8%)"
+  ],
+  [
+    "la cotisation prevoyance AGFF",
+    "a pour base",
+    "la base de la cotisation prevoyance AGFF"
+  ],
+  ["la base de la cotisation prevoyance AGFF", "2017", 100],
+  ["la base de la cotisation prevoyance AGFF", "2018", 100],
+  [
+    "la cotisation prevoyance AGFF",
+    "a pour taux",
+    "le taux de la cotisation prevoyance AGFF"
+  ],
+  ["le taux de la cotisation prevoyance AGFF", "2017", 1.95],
+  ["le taux de la cotisation prevoyance AGFF", "2018", 1.95],
+
+  ["une paie", "est sujette à", "la cotisation CSG déductible"],
+  ["la cotisation CSG déductible", "a pour nom", "CSG DEDUCTIBLE"],
+  [
+    "la cotisation CSG déductible",
+    "a pour base",
+    "la base de la cotisation CSG déductible"
+  ],
+  ["la base de la cotisation CSG déductible", "2017", 98.25],
+  ["la base de la cotisation CSG déductible", "2018", 98.25],
+  [
+    "la cotisation CSG déductible",
+    "a pour taux",
+    "le taux de la cotisation CSG déductible"
+  ],
+  ["le taux de la cotisation CSG déductible", "2017", 5.1],
+  ["le taux de la cotisation CSG déductible", "2018", 5.1],
+
+  ["une paie", "est sujette à", "la cotisation CSG+RDS non déductible"],
+  ["une paie", "est imposable sur", "la cotisation CSG+RDS non déductible"],
+  [
+    "la cotisation CSG+RDS non déductible",
+    "a pour nom",
+    "CSG + RDS PART NON DEDUCTIBLE (2,4% et 0,50%)"
+  ],
+  [
+    "la cotisation CSG+RDS non déductible",
+    "a pour base",
+    "la base de la cotisation CSG+RDS non déductible"
+  ],
+  ["la base de la cotisation CSG+RDS non déductible", "2017", 98.25],
+  ["la base de la cotisation CSG+RDS non déductible", "2018", 98.25],
+  [
+    "la cotisation CSG+RDS non déductible",
+    "a pour taux",
+    "le taux de la cotisation CSG+RDS non déductible"
+  ],
+  ["le taux de la cotisation CSG+RDS non déductible", "2017", 2.9],
+  ["le taux de la cotisation CSG+RDS non déductible", "2018", 2.9]
+]

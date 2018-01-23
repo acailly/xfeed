@@ -1,0 +1,72 @@
+[
+  ["le projet assistante maternelle", "est", "un projet"],
+  ["le projet assistante maternelle", "a pour nom", "Assistante maternelle"],
+
+  ["le projet assistante maternelle", "contient", "le début de contrat"],
+  ["le début de contrat", "est", "un début de contrat"],
+  ["le début de contrat", "a pour nom", "Début du contrat"],
+  ["le début de contrat", "a pour date de création", "20171001"],
+  ["le début de contrat", "a pour date de création (formatté)", "01/10/2017"],
+
+  ["le projet assistante maternelle", "contient", "la paie d'octobre 2017"],
+  ["la paie d'octobre 2017", "est", "une paie"],
+  ["la paie d'octobre 2017", "couvre le mois de", "octobre"],
+  ["la paie d'octobre 2017", "couvre l'année", "2017"],
+  ["la paie d'octobre 2017", "a pour nom", "Paie d'Octobre 2017"],
+  ["la paie d'octobre 2017", "a pour date de création", "20171101"],
+  [
+    "la paie d'octobre 2017",
+    "a pour date de création (formatté)",
+    "01/11/2017"
+  ],
+
+  ["le projet assistante maternelle", "contient", "la paie de novembre 2017"],
+  ["la paie de novembre 2017", "est", "une paie"],
+  ["la paie de novembre 2017", "couvre le mois de", "novembre"],
+  ["la paie de novembre 2017", "couvre l'année", "2017"],
+  ["la paie de novembre 2017", "a pour nom", "Paie de Novembre 2017"],
+  ["la paie de novembre 2017", "a pour date de création", "20171201"],
+  [
+    "la paie de novembre 2017",
+    "a pour date de création (formatté)",
+    "01/12/2017"
+  ],
+  ["la paie de novembre 2017", "a pour nombre d'heures travaillées", 115],
+  ["la paie de novembre 2017", "a pour nombre de jours travaillés", 16],
+  ["la paie de novembre 2017", "a pour taux horaire brut", 3.77],
+  [
+    "la paie de novembre 2017",
+    "a pour indemnité journalière d'entretien",
+    2.83
+  ],
+
+  ["le projet assistante maternelle", "contient", "la paie de décembre 2017"],
+  ["la paie de décembre 2017", "est", "une paie"],
+  ["la paie de décembre 2017", "couvre le mois de", "décembre"],
+  ["la paie de décembre 2017", "couvre l'année", "2018"],
+  ["la paie de décembre 2017", "a pour nom", "Paie de Décembre 2017"],
+  ["la paie de décembre 2017", "a pour date de création", "20180101"],
+  [
+    "la paie de décembre 2017",
+    "a pour date de création (formatté)",
+    "01/01/2018"
+  ],
+
+  ["le projet assistante maternelle", "contient", "la paie de janvier 2018"],
+  ["la paie de janvier 2018", "est", "une paie"],
+  ["la paie de janvier 2018", "couvre le mois de", "janvier"],
+  ["la paie de janvier 2018", "couvre l'année", "2018"],
+  ["la paie de janvier 2018", "a pour nom", "Paie de Janvier 2018"],
+  ["la paie de janvier 2018", "a pour date de création", "20180201"],
+  [
+    "la paie de janvier 2018",
+    "a pour date de création (formatté)",
+    "01/02/2018"
+  ],
+
+  [
+    "le projet assistante maternelle",
+    "a pour élément sélectionné",
+    "la paie de novembre 2017"
+  ]
+]

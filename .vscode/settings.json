@@ -6,5 +6,8 @@
   "[javascript]": {
     "editor.formatOnSave": true
   },
+  "[json]": {
+    "editor.formatOnSave": true
+  },
   "standard.enable": false
 }
