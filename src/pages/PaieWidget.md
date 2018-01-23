@@ -7,7 +7,7 @@ réparties sur <F s="${rootSubject}" p="a pour nombre de jours travaillés" edit
 
 ## Salaire brut total
 
-Le taux horaire brut est de <F s="${rootSubject}" p="a pour taux horaire brut" editable=true></F>€ / heure, ce qui donne un salaire brut total de <F s="${rootSubject}" p="a pour taux horaire brut"></F>€ x <F s="${rootSubject}" p="a pour nombre d'heures travaillées"></F> heures = **<F s="${rootSubject}" p="a pour salaire brut"></F>€**
+Le taux horaire brut est de <F s="${rootSubject}" p="a pour taux horaire brut" editable=true></F>€ / heure, ce qui donne un salaire brut total de <F s="${rootSubject}" p="a pour taux horaire brut"></F>€ x <F s="${rootSubject}" p="a pour nombre d'heures travaillées"></F> heures = **<F s="${rootSubject}" p="a pour salaire brut (formatté)"></F>€**
 
 ## Salaire net
 
@@ -17,7 +17,7 @@ TODO ACY Les bases et taux de cotisations ne sont plus accessibles à un simple 
 
 <MF s="une paie" p="est sujette à"  >
 
-- La cotisation **<F s="${o}" p="a pour nom"></F>** s'applique sur <F s="${o}" p="a pour base"></F>% de <F s="${rootSubject}" p="a pour salaire brut"></F>€ avec un taux de <F s="${o}" p="a pour taux"></F>% : <F s="${rootSubject}" p="${o} (formatté)"></F>€
+- La cotisation **<F s="${o}" p="a pour nom"></F>** s'applique sur <F s="${o}" p="a pour base"></F>% de <F s="${rootSubject}" p="a pour salaire brut (formatté)"></F>€ avec un taux de <F s="${o}" p="a pour taux"></F>% : <F s="${rootSubject}" p="${o} (formatté)"></F>€
 
 </MF>
 
@@ -35,7 +35,7 @@ Le salaire net imposable est calculé en additionnant le salaire net et les coti
 
 <MF s="une paie" p="est imposable sur" >
 
-- La cotisation **<F s="${o}" p="a pour nom"></F>** <F s="${rootSubject}" p="${o} (formatté)"></F>€
+- La cotisation **<F s="${o}" p="a pour nom"></F>** : <F s="${rootSubject}" p="${o} (formatté)"></F>€
 
 </MF>
 
