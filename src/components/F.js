@@ -42,7 +42,8 @@ class F extends PureComponent {
     const { search, editable } = this.props
     const { editingValue, values } = this.state
 
-    const editText = editable === true ? search : editable
+    const editText =
+      editable === true || editable === "true" ? search : editable
 
     const factsToRemove = []
     if (values._) {
@@ -53,6 +54,8 @@ class F extends PureComponent {
     const newValues = { ...values, _: editingValue }
     const factToAdd = textFactToArray(editText, newValues)
     const factsToAdd = [factToAdd]
+
+    console.log("UPDATE", factsToAdd, factsToRemove)
 
     store.update$(factsToAdd, factsToRemove).subscribe(
       () => {
