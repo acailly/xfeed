@@ -63,14 +63,14 @@
     "a pour date de création (formatté)",
     "01/02/2018"
   ],
-  ["la paie de janvier 2018", "a pour nombre d'heures travaillées", 115],
-  ["la paie de janvier 2018", "a pour nombre de jours travaillés", 16],
+  ["la paie de janvier 2018", "a pour nombre d'heures travaillées", 135],
+  ["la paie de janvier 2018", "a pour nombre de jours travaillés", 15],
   ["la paie de janvier 2018", "a pour taux horaire brut", 3.82],
-  ["la paie de janvier 2018", "a pour indemnité journalière d'entretien", 2.83],
+  ["la paie de janvier 2018", "a pour indemnité journalière d'entretien", 3.21],
 
   [
     "le projet assistante maternelle",
     "a pour élément sélectionné",
-    "la paie de novembre 2017"
+    "la paie de janvier 2018"
   ]
 ]

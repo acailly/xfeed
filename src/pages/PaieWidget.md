@@ -17,7 +17,7 @@ Le taux horaire brut est de <F search="${rootSubject}, a pour taux horaire brut,
 
 </MF>
 
-Le montant total des cotisations s'élève à <F search="${rootSubject}, est sujette à un total de cotisation de (formatté), ?_"></F>€, ce qui donne un salaire net de <F search="${rootSubject}, a pour salaire brut, ?_"></F>€ - <F search="${rootSubject}, est sujette à un total de cotisation de (formatté), ?_"></F>€ = **<F search="${rootSubject}, a pour salaire net (formatté), ?_"></F>€**
+Le montant total des cotisations s'élève à <F search="${rootSubject}, est sujette à un total de cotisation de (formatté), ?_"></F>€, ce qui donne un salaire net de <F search="${rootSubject}, a pour salaire brut (formatté), ?_"></F>€ - <F search="${rootSubject}, est sujette à un total de cotisation de (formatté), ?_"></F>€ = **<F search="${rootSubject}, a pour salaire net (formatté), ?_"></F>€**
 
 ## Indemnités d'entretien
 
