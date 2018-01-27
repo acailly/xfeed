@@ -10,6 +10,8 @@ const decodeFromBase64 = str => {
   return decodeURIComponent(escape(window.atob(str)))
 }
 
+//TODO ACY Refacorer ce composant de façon à ce qu'il utilise la syntaxe textuelle au lieu de spo
+
 class MF extends PureComponent {
   state = {}
 
