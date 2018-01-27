@@ -2,15 +2,19 @@ import React, { PureComponent } from "react"
 import ReactModal from "react-modal"
 import store from "../store"
 
+import textSearchToArray from "../syntax/textSearchToArray"
+import textFactToArray from "../syntax/textFactToArray"
+
 class F extends PureComponent {
-  state = { hover: false, editing: false, editingValue: undefined }
+  state = { hover: false, editing: false, editingValue: undefined, values: {} }
 
   componentDidMount = () => {
-    const { s, p } = this.props
+    const { search } = this.props
+    const searchWithArraySyntax = textSearchToArray(search)
 
-    store.watchEach$([[s, p, ["o"]]]).subscribe(
-      ({ o }) => {
-        this.setState({ o })
+    store.watchEach$(searchWithArraySyntax).subscribe(
+      values => {
+        this.setState({ values })
       },
       err => console.error(err)
     )
@@ -35,16 +39,20 @@ class F extends PureComponent {
   handleValidateEdition = event => {
     event.preventDefault()
 
-    const { s, p } = this.props
-    const { editingValue, o } = this.state
+    const { search, editable } = this.props
+    const { editingValue, values } = this.state
+
+    const editText = editable === true ? search : editable
 
     const factsToRemove = []
-
-    if (s && p && o) {
-      factsToRemove.push([s, p, o])
+    if (values._) {
+      const factToRemove = textFactToArray(editText, values)
+      factsToRemove.push(factToRemove)
     }
 
-    const factsToAdd = [[s, p, editingValue]]
+    const newValues = { ...values, _: editingValue }
+    const factToAdd = textFactToArray(editText, newValues)
+    const factsToAdd = [factToAdd]
 
     store.update$(factsToAdd, factsToRemove).subscribe(
       () => {
@@ -52,7 +60,7 @@ class F extends PureComponent {
           hover: false,
           editing: false,
           editingValue: undefined,
-          o: editingValue
+          values: newValues
         })
       },
       err => console.error(err)
@@ -69,9 +77,9 @@ class F extends PureComponent {
 
   render() {
     const { editable } = this.props
-    const { o, hover, editing } = this.state
+    const { values, hover, editing } = this.state
 
-    const label = o || <b>?</b>
+    const label = values._ || <b>?</b>
 
     const backgroundColor =
       hover && editable && !editing ? "rgb(32, 156, 238)" : undefined
