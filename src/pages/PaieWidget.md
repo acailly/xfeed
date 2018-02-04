@@ -41,7 +41,7 @@ Le salaire net imposable est donc égal à <F search="${rootSubject}, a pour sal
 
 Le salaire net à payer est la somme du salaire net (<F search="${rootSubject}, a pour salaire net (formatté), ?_"></F>€) et des indemnités d'entretien versées (<F search="${rootSubject}, a pour montant total d'indemnité d'entretien (formatté), ?_"></F>€) = **<F search="${rootSubject}, a pour salaire net à payer (formatté), ?_"></F>€**
 
-## Déclaration PAJEMPLOI
+## Déclaration [PAJEMPLOI](http://www.pajemploi.urssaf.fr)
 
 - Mois de <F search="${rootSubject}, couvre le mois de, ?_"></F> <F search="${rootSubject}, couvre l'année, ?_"></F>
 - Nombre d'heures normales : <F search="${rootSubject}, a pour nombre d'heures travaillées, ?_"></F> heures	
@@ -49,5 +49,7 @@ Le salaire net à payer est la somme du salaire net (<F search="${rootSubject}, 
 - Nombre de jours de congés payés : 0 
 - Salaire net total : <F search="${rootSubject}, a pour salaire net (formatté), ?_"></F>€
 - Indemnités d'entretien : 48,15€
+
+
 
 
