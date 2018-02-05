@@ -1,11 +1,15 @@
 import React, { Component, Fragment } from "react"
-import { groupBy, sortBy, prop, sort, identity, keys, ascend } from "ramda"
+import {
+  groupBy,
+  sortBy,
+  prop,
+  sort,
+  identity,
+  keys,
+  ascend,
+  contains
+} from "ramda"
 import store from "../store"
-
-//TODO ACY Ajouter des liens sur les objets si ce sont des sujets
-//Exemple : une paie est sujette à la cotisation chomage
-//=> ajouter un lien sur "la cotisation chomage" qui fait défiler jusqu'aux
-//faits relatif au sujet "la cotisation chomage"
 
 class Facts extends Component {
   state = { facts: [] }
@@ -34,12 +38,22 @@ class Facts extends Component {
 
           return (
             <Fragment key={subject}>
-              <h2>{subject}</h2>
+              <h2 id={subject}>{subject}</h2>
               <section>
                 {sortedSubjectFacts.map(({ subject, predicate, object }) => {
+                  const objectIsReferencingAnotherSubject = contains(
+                    object,
+                    sortedSubjects
+                  )
+                  const formattedObject = objectIsReferencingAnotherSubject ? (
+                    <a href={`#${object}`}>{object}</a>
+                  ) : (
+                    object
+                  )
+
                   return (
                     <div key={subject + predicate + object}>
-                      {subject} {predicate} {object}
+                      {subject} {predicate} {formattedObject}
                     </div>
                   )
                 })}
