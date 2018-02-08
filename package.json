@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "blockly": "^1.0.0",
     "cytoscape": "^3.2.7",
     "cytoscape-cola": "^2.0.1",
     "es6-template-strings": "^2.0.1",

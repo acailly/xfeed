@@ -1,5 +1,6 @@
 //TODO ACY Upgrader RxJs pour les lettable operators
 //https://github.com/ReactiveX/rxjs/blob/master/doc/lettable-operators.md
+//TODO ACY Utiliser pull streams ou callbags
 
 import "rxjs/add/observable/from"
 import "rxjs/add/observable/of"
