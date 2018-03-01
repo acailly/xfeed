@@ -26,7 +26,7 @@ addInitialFacts().then(() => {
         <Redirect
           exact
           from="/"
-          to="/le projet assistante maternelle/la paie de janvier 2018"
+          to="/le projet assistante maternelle/la paie de fevrier 2018"
         />
         <Route path="/debug/facts" component={Facts} />
         <Route path="/debug/graph" component={FactsGraph} />
