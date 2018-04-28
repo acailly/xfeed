@@ -15,7 +15,6 @@ import App from "./components/App"
 import Facts from "./components/Facts"
 import FactsGraph from "./components/FactsGraph"
 import addInitialFacts from "./addInitialFacts"
-import RuleEditor from "./components/RuleEditor"
 
 ReactModal.setAppElement("#root")
 
@@ -30,7 +29,6 @@ addInitialFacts().then(() => {
         />
         <Route path="/debug/facts" component={Facts} />
         <Route path="/debug/graph" component={FactsGraph} />
-        <Route path="/debug/rule" component={RuleEditor} />
         <Route path="/:subject/:selected" component={App} />
       </Switch>
     </Router>,
