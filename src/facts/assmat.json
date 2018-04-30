@@ -96,9 +96,39 @@
   ["la paie de mars 2018", "a pour taux horaire brut", 3.82],
   ["la paie de mars 2018", "a pour indemnité journalière d'entretien", 3.21],
 
+  ["le projet assistante maternelle", "contient", "la paie d'avril 2018"],
+  ["la paie d'avril 2018", "est", "une paie"],
+  ["la paie d'avril 2018", "couvre le mois de", "avril"],
+  ["la paie d'avril 2018", "couvre l'année", "2018"],
+  ["la paie d'avril 2018", "a pour nom", "Paie d'Avril 2018"],
+  ["la paie d'avril 2018", "a pour date de création", "20180501"],
+  ["la paie d'avril 2018", "a pour date de création (formatté)", "01/05/2018"],
+  ["la paie d'avril 2018", "a pour nombre d'heures travaillées", 135],
+  ["la paie d'avril 2018", "a pour nombre de jours travaillés", 15],
+  ["la paie d'avril 2018", "a pour taux horaire brut", 3.82],
+  ["la paie d'avril 2018", "a pour indemnité journalière d'entretien", 3.21],
+
+  ["le projet assistante maternelle", "contient", "la paie de mai 2018"],
+  ["la paie de mai 2018", "est", "une paie"],
+  ["la paie de mai 2018", "couvre le mois de", "mai"],
+  ["la paie de mai 2018", "couvre l'année", "2018"],
+  ["la paie de mai 2018", "a pour nom", "Paie de Mai 2018"],
+  ["la paie de mai 2018", "a pour date de création", "20180601"],
+  ["la paie de mai 2018", "a pour date de création (formatté)", "01/06/2018"],
+  ["la paie de mai 2018", "a pour nombre d'heures travaillées", 135],
+  ["la paie de mai 2018", "a pour nombre de jours travaillés", 15],
+  ["la paie de mai 2018", "a pour taux horaire brut", 3.82],
+  ["la paie de mai 2018", "a pour indemnité journalière d'entretien", 3.21],
+
+  ["le projet assistante maternelle", "contient", "les congés 2018"],
+  ["les congés 2018", "est", "un calcul de congés annuels"],
+  ["les congés 2018", "a pour nom", "Congés 2018"],
+  ["les congés 2018", "a pour date de création", "20180602"],
+  ["les congés 2018", "a pour date de création (formatté)", "02/06/2017"],
+
   [
     "le projet assistante maternelle",
     "a pour élément sélectionné",
-    "la paie de mars 2018"
+    "les congés 2018"
   ]
 ]
