@@ -3,11 +3,12 @@ import {
   groupBy,
   sortBy,
   prop,
-  sort,
   identity,
   keys,
   ascend,
-  contains
+  contains,
+  map,
+  sortWith
 } from "ramda"
 import store from "../store"
 
@@ -18,17 +19,24 @@ class Facts extends Component {
     store
       .watchAll$([[["subject"], ["predicate"], ["object"]]])
       .do(facts => {
+        const objects = map(prop("object"), facts)
         const factsGroupedBySubject = groupBy(prop("subject"))(facts)
-        this.setState({ factsGroupedBySubject })
+        this.setState({ factsGroupedBySubject, objects })
       })
       .catch(err => console.error(err))
       .subscribe()
   }
 
   render() {
-    const sortedSubjects = sort(ascend(identity))(
-      keys(this.state.factsGroupedBySubject)
-    )
+    const isSubjectReferencedByAnotherSubject = subject =>
+      contains(subject, this.state.objects)
+
+    const subjectSort = sortWith([
+      ascend(isSubjectReferencedByAnotherSubject),
+      ascend(identity)
+    ])
+
+    const sortedSubjects = subjectSort(keys(this.state.factsGroupedBySubject))
 
     return (
       <article>
