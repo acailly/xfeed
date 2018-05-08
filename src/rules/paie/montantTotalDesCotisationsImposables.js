@@ -1,5 +1,5 @@
 import { pipe, mapObjIndexed, sum, groupBy, pluck, prop } from "ramda"
-import store from "../store"
+import store from "../../store"
 
 store
   .watchAll$([
