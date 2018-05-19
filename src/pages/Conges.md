@@ -140,4 +140,5 @@ Le maximum des deux est donc <F search="${rootSubject}, a pour montant (formatt�
 
 - [Convention collective](https://www.legifrance.gouv.fr/affichIDCC.do?idSectionTA=KALISCTA000005713212&cidTexte=KALITEXT000005669667&idConvention=KALICONT000005635807)
 - [Article L3141-9 du code du travail](https://www.legifrance.gouv.fr/affichCodeArticle.do;jsessionid=8140DDCE33CC8D4B6F8F8011A0073E12.tpdila18v_3?idArticle=LEGIARTI000006902646&cidTexte=LEGITEXT000006072050&categorieLien=id&dateTexte=20160809)
+- [Méthodes de calcul des congés](https://www.service-public.fr/particuliers/vosdroits/F33359)
 
