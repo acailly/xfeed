@@ -125,8 +125,9 @@
   ["les congés 2018", "a pour nom", "Congés 2018"],
   ["les congés 2018", "a pour date de création", "20180602"],
   ["les congés 2018", "a pour date de création (formatté)", "02/06/2017"],
-  ["les congés 2018", "a pour nombre de semaines travaillées", "46"],
-  ["les congés 2018", "a pour nombre de semaines de congés prises", "4"],
+  ["les congés 2018", "a pour nombre de jours travaillés", "114"],
+  ["les congés 2018", "a pour nombre de jours travaillés hebdomadaire", "4"],
+  ["les congés 2018", "a pour nombre de semaines de congés prises", "0"],
   ["les congés 2018", "plus ou moins de 21 ans au 30 avril", "plus"],
   ["les congés 2018", "nombre enfants de moins de 15 ans au 30 avril", 2],
   [
@@ -135,7 +136,7 @@
     36
   ],
   ["les congés 2018", "a pour taux horaire brut", 3.82],
-  ["les congés 2018", "a pour remuneration brute totale", 2000],
+  ["les congés 2018", "a pour remuneration brute totale", 4164.88],
 
   [
     "le projet assistante maternelle",

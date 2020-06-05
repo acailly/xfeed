@@ -38,7 +38,13 @@ Nous allons calculer **la rémunération brute que le salarié aurait perçue po
 ### Jours acquis 
 
 L'assistante maternelle a travaillé 
-<F search="${rootSubject}, a pour nombre de semaines travaillées, ?_" editable=true ></F> 
+<F search="${rootSubject}, a pour nombre de jours travaillés, ?_" editable=true ></F> 
+jours depuis le 1er juin dernier (calculé à partir des indemnités d'entretien déclarées sur les feuilles de paie)
+
+Etant donné qu'elle travaille
+<F search="${rootSubject}, a pour nombre de jours travaillés hebdomadaire, ?_" editable=true ></F>
+jours par semaine, cela équivaut à
+<F search="${rootSubject}, a pour nombre de semaines travaillées, ?_"></F> 
 semaines depuis le 1er juin dernier
 
 L'assistante maternelle a pris 
@@ -72,9 +78,11 @@ de 21 ans et avait
 <F search="${rootSubject}, nombre enfants de moins de 15 ans au 30 avril, ?_" editable=true ></F>
 enfants à charge de moins de 15 ans
 
-Ce qui modifie le nombre de congés acquis à
-<F search="${rootSubject}, a pour jours acquis avec enfants à charge, ?_"></F>
-jours de congés
+Ce qui modifie le nombre de congés acquis à 
+**<F search="${rootSubject}, a pour jours acquis avec enfants à charge, ?_"></F>
+jours de congés** (
+<F search="${rootSubject}, a pour nombre de jours enfants à charge, ?_"></F>
+jours en plus en tenant compte de la limite de 30 jours)
 
 ### Conversion en euros
 
@@ -113,12 +121,6 @@ Si on ajoute le montant des feuilles de paie de l'année dernière, on obtient
 Le montant à verser pour les congés est égal à 1/10ème de cette somme, c'est à dire
 <F search="${rootSubject}, a pour montant avec règle du 1/10ème (formatté), ?_"></F>€
 
-### ... plus les jours enfants à charge ?
-
-[TODO](http://tut-tuuut.github.io/pajomatic//2016/05/09/conges-annee-incomplete.html#mthode-des-10-)
-
-> *Si j’ai bien compris, il y a une petite subtilité de calcul ici pour les assmat qui ont des jours de congés « enfant à charge » : les 10 % calculés ci-dessus sont en fait le prix à payer pour l’ensemble des congés sans les jours enfants à charge. Avec une petite règle de 3 vous pouvez avoir le montant à payer en incluant ces jours-ci.*
-
 ## Quelle méthode appliquer ?
 
 - La méthode du maintient de salaire nous donne <F search="${rootSubject}, a pour montant avec maintien de salaire (formatté), ?_"></F>€
@@ -134,7 +136,7 @@ Le maximum des deux est donc <F search="${rootSubject}, a pour montant (formatt�
 - soit en 1 seule fois au mois de juin ;
 - soit lors de la prise principale des congés ;
 - soit au fur et à mesure de la prise des congés ;
-- soit par 12e chaque mois.
+- soit par 12e chaque mois *(c'est à dire <F search="${rootSubject}, a pour montant divisé par 12 (formatté), ?_"></F>€)*.
 
 ## Documents de référence
 

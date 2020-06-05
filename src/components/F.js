@@ -13,10 +13,10 @@ class F extends PureComponent {
     const searchWithArraySyntax = textSearchToArray(search)
 
     store.watchEach$(searchWithArraySyntax).subscribe(
-      values => {
+      (values) => {
         this.setState({ values })
       },
-      err => console.error(err)
+      (err) => console.error(err)
     )
   }
 
@@ -32,11 +32,11 @@ class F extends PureComponent {
     this.setState({ editing: true })
   }
 
-  handleChange = event => {
+  handleChange = (event) => {
     this.setState({ editingValue: event.target.value })
   }
 
-  handleValidateEdition = event => {
+  handleValidateEdition = (event) => {
     event.preventDefault()
 
     const { search, editable } = this.props
@@ -63,10 +63,10 @@ class F extends PureComponent {
           hover: false,
           editing: false,
           editingValue: undefined,
-          values: newValues
+          values: newValues,
         })
       },
-      err => console.error(err)
+      (err) => console.error(err)
     )
   }
 
@@ -74,7 +74,7 @@ class F extends PureComponent {
     this.setState({
       hover: false,
       editing: false,
-      editingValue: undefined
+      editingValue: undefined,
     })
   }
 
@@ -82,7 +82,7 @@ class F extends PureComponent {
     const { editable } = this.props
     const { values, hover, editing } = this.state
 
-    const label = values._ || <b>?</b>
+    const label = values._ !== undefined ? values._ : <b>?</b>
 
     const backgroundColor =
       hover && editable && !editing ? "rgb(32, 156, 238)" : undefined
@@ -108,7 +108,7 @@ class F extends PureComponent {
                 borderRadius: "3px",
                 backgroundColor,
                 color,
-                cursor: "pointer"
+                cursor: "pointer",
               }
             : {}
         }
@@ -132,8 +132,8 @@ class F extends PureComponent {
               display: "flex",
               flexDirection: "row",
               justifyContent: "center",
-              alignItems: "center"
-            }
+              alignItems: "center",
+            },
           }}
         >
           <form onSubmit={this.handleValidateEdition}>
